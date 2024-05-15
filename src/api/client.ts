@@ -147,7 +147,7 @@ export const scene_searchs = (params: any) => {
 };
 
 export const midj_ai_draw = (params: any) => {
-  return Http.post("/midjourney_ai", params);
+  return Http.post("/mj/submit/imagine", params);
 };
 
 export const c_session_name = (params: any) => {
@@ -209,7 +209,7 @@ export const get_me_all_app = (params: any) => {
 };
 
 export const midj_ai_check = (params: any) => {
-  return Http.post("/midjourney_ai_get", params);
+  return Http.get("/mj/localTask/list", params);
 };
 
 export const get_siwei_limit = () => {

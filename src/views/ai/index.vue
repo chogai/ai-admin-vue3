@@ -14,7 +14,6 @@
         <a-tab-pane
           title="普通绘画"
           key="gpt"
-          v-if="counter.setting.is_open_normal_draw == 1"
         >
           <div class="pb-32">
             <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
@@ -343,7 +342,6 @@
         <a-tab-pane
           title="专业绘画"
           key="midj"
-          v-if="counter.setting.midjourney_is_open == 1"
         >
           <div class="w-full flex justify-center">
             <a-radio-group
@@ -5532,7 +5530,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, watch } from "vue";
 import { useCounter } from "@/store/modules/counter";
 import * as client from "@/api/client";
 import { getToken } from "@/utils/auth";
@@ -6977,7 +6975,7 @@ const midj_ai_draw_send = () => {
       })
       .then((res: any) => {
         get_choose_index(res._rawValue.id);
-        midj_ai_draw_check(res._rawValue.prompt_id);
+        midj_ai_draw_check(res.properties?.discordInstanceId);
         ElMessage.success("提交成功");
         draw_loading.value = false;
         get_me_d();
@@ -6988,33 +6986,36 @@ const midj_ai_draw_send = () => {
         draw_loading.value = false;
       });
   } else {
-    client
-      .midj_ai_draw({
-        prompt: input2.value,
-        version: version.value,
-        version_ban: version.value == 1 ? version_me.value : version_nj.value,
-        mj_row: mj_row.value,
-        niji_style: niji_style.value,
-        pic_select: pic_select.value,
-        chaos: chaos.value,
-        style: style.value,
-        choose_bili: choose_bili.value,
-        imageUrl: imageUrl.value,
-      })
-      .then((res: any) => {
-        now_draw_id.value = res._rawValue.id;
-        get_choose_index(now_draw_id.value);
-        midj_ai_draw_check(res._rawValue.prompt_id);
-        ElMessage.success("提交成功");
-        draw_loading.value = false;
+    midj_ai_draw_check()
+    // client
+    //   .midj_ai_draw({
+    //     prompt: input2.value,
+    //     version: version.value,
+    //     version_ban: version.value == 1 ? version_me.value : version_nj.value,
+    //     mj_row: mj_row.value,
+    //     niji_style: niji_style.value,
+    //     pic_select: pic_select.value,
+    //     chaos: chaos.value,
+    //     style: style.value,
+    //     choose_bili: choose_bili.value,
+    //     imageUrl: imageUrl.value,
+    //   })
+    //   .then((res: any) => {
+    //     console.log(res,'res');
+        
+    //     now_draw_id.value = res.result;
+    //     // get_choose_index(now_draw_id.value);
+    //     midj_ai_draw_check(res.result);
+    //     ElMessage.success("提交成功");
+    //     draw_loading.value = false;
 
-        get_me_d();
-      })
-      .catch((err: any) => {
-        ElMessage.error("提交失败");
-        is_sc.value = false;
-        draw_loading.value = false;
-      });
+    //     get_me_d();
+    //   })
+    //   .catch((err: any) => {
+    //     ElMessage.error("提交失败");
+    //     is_sc.value = false;
+    //     draw_loading.value = false;
+    //   });
   }
 };
 const midj_interval = ref();
@@ -7026,9 +7027,11 @@ const midj_ai_draw_check = (midj_ai: any) => {
   // is_finish.value = false
   client
     .midj_ai_check({
-      prompt_id: midj_ai,
+      taskId: midj_ai,
     })
     .then((res: any) => {
+      console.log(res);
+      
       // if (res._rawValue.info == 'finished') {
       //     r_images.value = res._rawValue.data
       //     is_finish.value = true
@@ -7433,7 +7436,7 @@ const del_me_draw = (id: number) => {
     });
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/styles/main.css";
 @import "@/assets/styles/mobile.css";
 

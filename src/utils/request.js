@@ -141,7 +141,8 @@ service.interceptors.response.use(
     } else if (code === 601) {
       ElMessage({ message: msg, type: "warning" });
       return Promise.reject(new Error(msg));
-    } else if (code !== 200) {
+    } else if (code !== 200 && code !== 1) {
+      console.log(123);
       ElNotification.error({ title: msg });
       return Promise.reject("error");
     } else {
@@ -206,8 +207,8 @@ export const Http = new (class Http {
     return service({ url, method: "get", params });
   }
 
-  post(url, params) {
-    return service({ url, method: "post", params });
+  post(url, data) {
+    return service({ url, method: "post", data });
   }
 
   put(url, body) {
