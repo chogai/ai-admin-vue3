@@ -208,8 +208,8 @@ export const get_me_all_app = (params: any) => {
   return Http.post("/get_me_all_app", params);
 };
 
-export const midj_ai_check = (params: any) => {
-  return Http.get("/mj/localTask/list", params);
+export const midj_ai_check = (id: string) => {
+  return Http.get(`/mj/localTask/byTaskId/${id}`);
 };
 
 export const get_siwei_limit = () => {

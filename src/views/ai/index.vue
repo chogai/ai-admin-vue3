@@ -2173,7 +2173,7 @@
                   <!--first load-->
                   <div
                     class="generate-card__generating mb-2"
-                    v-if="now_draw.progress != 100 && !now_draw.no_img"
+                    v-if="now_draw.progress != 100"
                   >
                     <div class="loading__progress--container pt-20 pb-20">
                       <div class="loader">
@@ -2193,7 +2193,7 @@
                     </div>
                   </div>
                   <!--have image-->
-                  <div
+                  <!-- <div
                     class="generate-area-pc__content-wrap"
                     v-else-if="now_draw.progress != 0 && !now_draw.image"
                   >
@@ -2244,13 +2244,13 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <!--image done-->
                   <div class="generate-area-pc__content-wrap" v-else>
                     <div class="generate-area-pc__content-outer">
                       <div class="generate-area-pc__content">
                         <div
-                          class="generate-card generate-card--generated flex-column overflow-hidden"
+                          class="generate-card generate-card--generated flex-col overflow-hidden"
                         >
                           <a-image
                             fit="contain"
@@ -6934,7 +6934,7 @@ const now_draw = ref("");
 const now_draw_id = ref(0);
 const now_draw_time = ref();
 const get_choose_index = (id: any) => {
-  is_finish.value = false;
+  is_finish.value = false;``
   is_sc.value = false;
   infoLoading.value = true;
   client
@@ -6986,36 +6986,34 @@ const midj_ai_draw_send = () => {
         draw_loading.value = false;
       });
   } else {
-    midj_ai_draw_check()
-    // client
-    //   .midj_ai_draw({
-    //     prompt: input2.value,
-    //     version: version.value,
-    //     version_ban: version.value == 1 ? version_me.value : version_nj.value,
-    //     mj_row: mj_row.value,
-    //     niji_style: niji_style.value,
-    //     pic_select: pic_select.value,
-    //     chaos: chaos.value,
-    //     style: style.value,
-    //     choose_bili: choose_bili.value,
-    //     imageUrl: imageUrl.value,
-    //   })
-    //   .then((res: any) => {
-    //     console.log(res,'res');
-        
-    //     now_draw_id.value = res.result;
-    //     // get_choose_index(now_draw_id.value);
-    //     midj_ai_draw_check(res.result);
-    //     ElMessage.success("提交成功");
-    //     draw_loading.value = false;
+    client
+      .midj_ai_draw({
+        prompt: input2.value,
+        version: version.value,
+        version_ban: version.value == 1 ? version_me.value : version_nj.value,
+        mj_row: mj_row.value,
+        niji_style: niji_style.value,
+        pic_select: pic_select.value,
+        chaos: chaos.value,
+        style: style.value,
+        choose_bili: choose_bili.value,
+        imageUrl: imageUrl.value,
+      })
+      .then((res: any) => {
 
-    //     get_me_d();
-    //   })
-    //   .catch((err: any) => {
-    //     ElMessage.error("提交失败");
-    //     is_sc.value = false;
-    //     draw_loading.value = false;
-    //   });
+        now_draw_id.value = res.result;
+        // get_choose_index(now_draw_id.value);
+        midj_ai_draw_check(res.result);
+        ElMessage.success("提交成功");
+        draw_loading.value = false;
+
+        // get_me_d();
+      })
+      .catch((err: any) => {
+        ElMessage.error("提交失败");
+        is_sc.value = false;
+        draw_loading.value = false;
+      });
   }
 };
 const midj_interval = ref();
@@ -7023,29 +7021,33 @@ const no_img = ref("");
 
 // 轮询midjourney
 const midj_ai_draw_check = (midj_ai: any) => {
-  // draw_loading.value = true
-  // is_finish.value = false
+  draw_loading.value = true
+  is_finish.value = false
   client
-    .midj_ai_check({
-      taskId: midj_ai,
-    })
+    .midj_ai_check(midj_ai)
     .then((res: any) => {
-      console.log(res);
+      const {data} = res
+      const progress = data.progress?.replace('%', '') || ''
+      if (!now_draw.value) {
+        now_draw.value = {}
+      }
+      now_draw.value.progress = Number(progress)
       
-      // if (res._rawValue.info == 'finished') {
-      //     r_images.value = res._rawValue.data
-      //     is_finish.value = true
-      //     is_sc.value = false
-      //     draw_loading.value = false
-      //     ElMessage.success('生成成功')
-      //     no_img.value = ''
-      //     get_me_d()
-      // } else {
-      //     no_img.value = res._rawValue.no_img
-      //     setTimeout(() => {
-      //         midj_ai_draw_check(midj_ai)
-      //     }, 3000)
-      // }
+      if (progress == '100') {
+          // r_images.value = data.imageUrl
+          now_draw.value.image = data.imageUrl
+          is_finish.value = true
+          is_sc.value = false
+          draw_loading.value = false
+          ElMessage.success('生成成功')
+          no_img.value = ''
+          // get_me_d()
+      } else {
+          // no_img.value = res._rawValue.no_img
+          setTimeout(() => {
+              midj_ai_draw_check(midj_ai)
+          }, 3000)
+      }
     })
     .catch((err: any) => {
       console.log(err);
