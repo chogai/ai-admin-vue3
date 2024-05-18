@@ -167,6 +167,7 @@ export const get_all_aicate = () => {
 
 export const signin_me = () => {
   return Http.post("/signin_me");
+  zoom_midj_index;
 };
 
 export const get_signin_info = () => {
@@ -174,7 +175,7 @@ export const get_signin_info = () => {
 };
 
 export const up_midj_index = (params: any) => {
-  return Http.post("/up_midjourney", params);
+  return Http.post("/mj/submit/change", params);
 };
 
 export const v_midj_index = (params: any) => {
@@ -369,7 +370,7 @@ export const get_curse = () => {
 };
 
 export const vary_midj_index = (params: any) => {
-  return Http.post("/vary_midj_index", params);
+  return Http.post("/mj/submit/lowAndHighChange", params);
 };
 
 export const region_midj_index = (params: any) => {
@@ -377,7 +378,7 @@ export const region_midj_index = (params: any) => {
 };
 
 export const zoom_midj_index = (params: any) => {
-  return Http.post("/zoom_midj_index", params);
+  return Http.post("/mj/submit/pixelChange", params);
 };
 
 export const get_index_draw = (params: any) => {
@@ -506,7 +507,7 @@ export const add_chat_zero = () => {
 };
 
 export const midjourney_describe = (params: any) => {
-  return Http.post("/midjourney_describe", params);
+  return Http.post("/mj/submit/describe", params);
 };
 
 export const delete_knowledge = (params: any) => {

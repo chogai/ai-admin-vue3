@@ -1,7 +1,7 @@
 <template>
   <div class="draw-mains flex w-full">
     <div
-      style="width: 340px"
+      style="width: 400px"
       class="flex h-full flex-col border-r-blue-200 draw-list-left relative"
     >
       <a-tabs
@@ -11,10 +11,7 @@
         size="large"
         class="justify-content-center mt-2"
       >
-        <a-tab-pane
-          title="普通绘画"
-          key="gpt"
-        >
+        <!-- <a-tab-pane title="普通绘画" key="gpt">
           <div class="pb-32">
             <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
               <div class="relative">
@@ -153,22 +150,8 @@
                 </button>
               </div>
             </section>
-
-            <!--<section-->
-            <!--    class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">-->
-            <!--    <div class="flex-center justify-between relative">-->
-            <!--        <div class="flex-center"><h5 class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between">-->
-            <!--            图片数量</h5></div>-->
-
-            <!--    </div>-->
-            <!--    <div class="UXmDHLrm">-->
-            <!--        <span v-for="(i,i_index) in images_list" :key="i_index"-->
-            <!--              :class="image_select==i.value?'OMJ2YPhL':''"-->
-            <!--              @click="change_i(i.value)">{{ i.name }}</span>-->
-            <!--    </div>-->
-            <!--</section>-->
           </div>
-        </a-tab-pane>
+        </a-tab-pane> -->
         <a-tab-pane
           title="精致绘画"
           key="dream"
@@ -339,10 +322,7 @@
             </section>
           </div>
         </a-tab-pane>
-        <a-tab-pane
-          title="专业绘画"
-          key="midj"
-        >
+        <a-tab-pane title="专业绘画" key="midj">
           <div class="w-full flex justify-center">
             <a-radio-group
               class="mb-2"
@@ -396,7 +376,7 @@
                     allow-clear
                     placeholder="请用英文输入Prompt，参考形式：画面主体，细节描述，修饰词"
                   />
-                  <div
+                  <!-- <div
                     class="des_check z-10 flex position-absolute left-2 bottom-3 cursor-pointer"
                   >
                     <a-trigger
@@ -436,9 +416,9 @@
                       <icon-skin />
                       描述咒语
                     </div>
-                  </div>
+                  </div> -->
                 </section>
-                <div class="w-full flex align-items-center">
+                <!-- <div class="w-full flex align-items-center">
                   <p class="flex-none text-gray-3 text-12">示范:</p>
                   <ul
                     class="flex align-items-center flex-grow whitespace-nowrap scrollbar-none"
@@ -460,7 +440,7 @@
                     class="cursor-pointer"
                     @click="change_prompt()"
                   />
-                </div>
+                </div> -->
               </div>
             </section>
             <a-upload
@@ -1250,7 +1230,7 @@
                 >
                   <a-textarea
                     v-model="input2"
-                    class="bg-white pb-10"
+                    class="!bg-white pb-10"
                     :auto-size="{ minRows: 7, maxRows: 7 }"
                     type="textarea"
                     :max-length="2000"
@@ -1924,47 +1904,7 @@
       <div
         class="absolute bottom-0 bg-white z-10 w-full h-110 p-4 bg-white-1 border-t border-r border-gray-5"
       >
-        <div class="flex mb-2">
-          <svg
-            t="1690301472439"
-            class="icon"
-            viewBox="0 0 1024 1024"
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            p-id="6949"
-            width="24"
-            height="24"
-          >
-            <path
-              d="M366 174h292a10 10 0 0 1 10 10v322a10 10 0 0 1-10 10H366a10 10 0 0 1-10-10V184a10 10 0 0 1 10-10z"
-              fill="#4988FD"
-              p-id="6950"
-            ></path>
-            <path
-              d="M658 546H366c-22.056 0-40-17.944-40-40V184c0-22.056 17.944-40 40-40h292c22.056 0 40 17.944 40 40v322c0 22.056-17.944 40-40 40z m-272-60h252V204H386v282z"
-              fill="#4988FD"
-              p-id="6951"
-            ></path>
-            <path
-              d="M507.582 304.244a4 4 0 0 1 7.188 0l86.972 178.018c0.586 1.2 1.734 2.03 201.152 28.936a4.002 4.002 0 0 1 2.216 6.87l-144.304 136.648a4.006 4.006 0 0 0-1.184 3.622l35.488 194.43a3.998 3.998 0 0 1-5.798 4.252l-176.244-93.506a4 4 0 0 0-3.75 0l-176.252 93.508a4 4 0 0 1-5.802-4.252l35.478-194.43a4.006 4.006 0 0 0-1.184-3.622l-144.304-136.648a4.002 4.002 0 0 1 2.216-6.868c199.416-26.912 200.564-27.736 201.152-28.938l86.96-178.02z"
-              fill="#DFECFD"
-              p-id="6952"
-            ></path>
-            <path
-              d="M331.204 887.48a33.92 33.92 0 0 1-30.082-18.148 34.15 34.15 0 0 1-3.376-21.91l32.956-180.61-134.074-126.96c-13.616-12.902-14.196-34.464-1.302-48.074a34.1 34.1 0 0 1 20.136-10.308c104.136-14.054 161.49-21.976 184.632-25.53l80.534-164.864c5.66-11.588 17.654-19.078 30.552-19.078 5.146 0 10.31 1.196 14.936 3.458a34.138 34.138 0 0 1 15.618 15.634l80.54 164.848c23.146 3.554 80.498 11.476 184.634 25.528 18.572 2.502 31.652 19.656 29.15 38.234a34.138 34.138 0 0 1-10.318 20.146l-134.074 126.962 32.958 180.568a33.782 33.782 0 0 1-5.506 25.47 33.778 33.778 0 0 1-21.896 14.086c-7.242 1.318-15.208 0.138-21.874-3.368l-164.154-87.09-164.068 87.042a34.19 34.19 0 0 1-15.922 3.964z m-53.87-353.836l104.852 99.29a33.896 33.896 0 0 1 10.072 30.78l-25.848 141.656 128.848-68.36c9.79-5.19 22.078-5.184 31.85-0.01l128.854 68.364-25.852-141.64a33.904 33.904 0 0 1 10.052-30.778l104.868-99.302c-61.762-8.382-100.142-13.708-121.64-16.872-12.33-1.814-19.714-3.004-23.946-3.858-4.89-0.986-17.88-3.608-24.658-17.488l-63.608-130.192-63.6 130.196c-6.788 13.88-19.772 16.498-24.66 17.484-4.228 0.854-11.612 2.042-23.946 3.856-21.464 3.158-59.842 8.484-121.638 16.874z"
-              fill="#DFECFD"
-              p-id="6953"
-            ></path>
-            <path
-              d="M418 651a29.9 29.9 0 0 1-21.212-8.788l-66-66c-11.716-11.714-11.716-30.71 0-42.426 11.714-11.714 30.71-11.714 42.426 0l66 66c11.716 11.714 11.716 30.71 0 42.426A29.908 29.908 0 0 1 418 651z"
-              fill="#4988FD"
-              p-id="6954"
-            ></path>
-          </svg>
-          消耗{{ counter.setting.money_name_set }}：{{
-            activeDraw == "midj" ? mj_midj : ai_draw_pay
-          }}/次
-        </div>
+        <div class="flex mb-2"></div>
         <a-button
           :loading="draw_loading"
           v-if="activeDraw == 'gpt'"
@@ -2169,7 +2109,7 @@
           <div class="ai-generate-area flex">
             <div class="generate-result-area flex-1 p-3">
               <div class="generate-result-area__container">
-                <div class="check_now_draw h-100" v-if="now_draw">
+                <div class="check_now_draw h-full" v-if="now_draw">
                   <!--first load-->
                   <div
                     class="generate-card__generating mb-2"
@@ -2500,7 +2440,7 @@
                                       :disabled="up_loading"
                                       class="mr-4 cursor-pointer w-30"
                                     >
-                                      Zoom(1.5x)
+                                      Zoom(4.0x)
                                     </a-button>
                                   </div>
                                   <!--<div class="flex">-->
@@ -2712,7 +2652,7 @@
                                   </template>
                                   私密
                                 </a-button>
-                                <a-button
+                                <!-- <a-button
                                   type="primary"
                                   :loading="draw_bottom"
                                   round
@@ -2724,7 +2664,7 @@
                                     <icon-unlock />
                                   </template>
                                   公开
-                                </a-button>
+                                </a-button> -->
                                 <a-button
                                   type="primary"
                                   status="danger"
@@ -2746,7 +2686,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="generate_now_all" v-if="is_sc || is_finish">
+                <div class="generate_now_all" v-if="is_sc">
                   <a-row :gutter="20" v-if="is_sc">
                     <a-col
                       :span="image_select > 1 ? 12 : 24"
@@ -3203,7 +3143,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-F8F8FB flex-center">
+            <!-- <div class="bg-F8F8FB flex-center">
               <div class="task_me flex">
                 <div
                   class="left_btn flex align-items-center mr-3"
@@ -3315,7 +3255,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -3476,20 +3416,6 @@
               </button>
             </div>
           </section>
-
-          <!--<section-->
-          <!--    class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">-->
-          <!--    <div class="flex-center justify-between relative">-->
-          <!--        <div class="flex-center"><h5 class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between">-->
-          <!--            图片数量</h5></div>-->
-
-          <!--    </div>-->
-          <!--    <div class="UXmDHLrm">-->
-          <!--        <span v-for="(i,i_index) in images_list" :key="i_index"-->
-          <!--              :class="image_select==i.value?'OMJ2YPhL':''"-->
-          <!--              @click="change_i(i.value)">{{ i.name }}</span>-->
-          <!--    </div>-->
-          <!--</section>-->
         </a-tab-pane>
         <a-tab-pane
           title="精致绘画"
@@ -5635,7 +5561,7 @@ const BaiduSuccess = (currentFile) => {
   ElMessage.success("上传成功!");
   baidu_imageUrl.value = currentFile.response.data;
 };
-const activeDraw = ref("gpt");
+const activeDraw = ref("midj");
 const onError = () => {
   console.log("error");
 };
@@ -6544,7 +6470,7 @@ const get_me_d = () => {
     });
 };
 if (token.value) {
-  get_me_d();
+  // get_me_d();
 }
 
 const visible1 = ref(false);
@@ -6663,8 +6589,8 @@ const handle_send = () => {
     });
 };
 if (token.value) {
-  get_user_balance();
-  get_my_like();
+  // get_user_balance();
+  // get_my_like();
 }
 const get_info = (name: string) => {
   if (input2.value == "") {
@@ -6934,7 +6860,8 @@ const now_draw = ref("");
 const now_draw_id = ref(0);
 const now_draw_time = ref();
 const get_choose_index = (id: any) => {
-  is_finish.value = false;``
+  is_finish.value = false;
+  ``;
   is_sc.value = false;
   infoLoading.value = true;
   client
@@ -7000,10 +6927,10 @@ const midj_ai_draw_send = () => {
         imageUrl: imageUrl.value,
       })
       .then((res: any) => {
-
-        now_draw_id.value = res.result;
+        const { data } = res;
+        now_draw_id.value = data.result;
         // get_choose_index(now_draw_id.value);
-        midj_ai_draw_check(res.result);
+        midj_ai_draw_check(data.result);
         ElMessage.success("提交成功");
         draw_loading.value = false;
 
@@ -7021,32 +6948,32 @@ const no_img = ref("");
 
 // 轮询midjourney
 const midj_ai_draw_check = (midj_ai: any) => {
-  draw_loading.value = true
-  is_finish.value = false
+  draw_loading.value = true;
+  is_finish.value = false;
   client
     .midj_ai_check(midj_ai)
     .then((res: any) => {
-      const {data} = res
-      const progress = data.progress?.replace('%', '') || ''
+      const { data } = res;
+      const progress = data.progress?.replace("%", "") || "";
       if (!now_draw.value) {
-        now_draw.value = {}
+        now_draw.value = {};
       }
-      now_draw.value.progress = Number(progress)
-      
-      if (progress == '100') {
-          // r_images.value = data.imageUrl
-          now_draw.value.image = data.imageUrl
-          is_finish.value = true
-          is_sc.value = false
-          draw_loading.value = false
-          ElMessage.success('生成成功')
-          no_img.value = ''
-          // get_me_d()
+      now_draw.value.progress = Number(progress);
+
+      if (progress == "100") {
+        // r_images.value = data.imageUrl
+        now_draw.value.image = data.imageUrl;
+        is_finish.value = true;
+        is_sc.value = false;
+        draw_loading.value = false;
+        ElMessage.success("生成成功");
+        no_img.value = "";
+        // get_me_d()
       } else {
-          // no_img.value = res._rawValue.no_img
-          setTimeout(() => {
-              midj_ai_draw_check(midj_ai)
-          }, 3000)
+        // no_img.value = res._rawValue.no_img
+        setTimeout(() => {
+          midj_ai_draw_check(midj_ai);
+        }, 3000);
       }
     })
     .catch((err: any) => {
@@ -7067,23 +6994,20 @@ const up_image_midj = (
   up_loading.value = true;
   is_sc.value = true;
   draw_loading.value = true;
-  now_draw_id.value = 0;
+  // now_draw_id.value = 0;
   now_draw.value = "";
   client
     .up_midj_index({
-      prompt: title,
+      action: "UPSCALE",
       index: index,
-      prompt_id: prompt_id,
-      message_id: message_id,
+      taskId: now_draw_id.value,
     })
     .then((res: any) => {
-      up_loading.value = false;
-      r_images.value = res._rawValue.data;
-      is_finish.value = false;
-      is_sc.value = false;
-      draw_loading.value = false;
-      get_choose_index(res._rawValue.id);
-      get_me_d();
+      const { data } = res;
+      now_draw_id.value = res.result;
+      midj_ai_draw_check(data.result);
+      // get_choose_index(res._rawValue.id);
+      // get_me_d();
     })
     .catch((err: any) => {
       up_loading.value = false;
@@ -7102,23 +7026,18 @@ const vary_image_midj = (
   up_loading.value = true;
   is_sc.value = true;
   draw_loading.value = true;
-  now_draw_id.value = 0;
+  // now_draw_id.value = 0;
   now_draw.value = "";
+  const vary = varys === "0" ? "VARIATION_LOW" : "VARIATION_HIGH";
   client
     .vary_midj_index({
-      prompt: title,
-      prompt_id: prompt_id,
-      message_id: message_id,
-      index: varys,
+      taskId: now_draw_id.value,
+      action: vary,
     })
     .then((res: any) => {
-      up_loading.value = false;
-      r_images.value = res._rawValue.data;
-      is_finish.value = false;
-      is_sc.value = false;
-      draw_loading.value = false;
-      get_choose_index(res._rawValue.id);
-      get_me_d();
+      const { data } = res;
+      now_draw_id.value = res.result;
+      midj_ai_draw_check(data.result);
     })
     .catch((err: any) => {
       up_loading.value = false;
@@ -7324,23 +7243,25 @@ const zoom_image_midj = (
   up_loading.value = true;
   is_sc.value = true;
   draw_loading.value = true;
-  now_draw_id.value = 0;
+  // now_draw_id.value = 0;
   now_draw.value = "";
+  const zoom = varys === "0" ? "UPSAMPLE2X" : "UPSAMPLE4X";
   client
     .zoom_midj_index({
-      prompt: title,
-      prompt_id: prompt_id,
-      message_id: message_id,
-      index: varys,
+      action: zoom,
+      taskId: now_draw_id.value,
     })
     .then((res: any) => {
-      up_loading.value = false;
-      r_images.value = res._rawValue.data;
-      is_finish.value = false;
-      is_sc.value = false;
-      draw_loading.value = false;
-      get_choose_index(res._rawValue.id);
-      get_me_d();
+      // up_loading.value = false;
+      // r_images.value = res._rawValue.data;
+      // is_finish.value = false;
+      // is_sc.value = false;
+      // draw_loading.value = false;
+      // get_choose_index(res._rawValue.id);
+      // get_me_d();
+      const { data } = res;
+      now_draw_id.value = res.result;
+      midj_ai_draw_check(data.result);
     })
     .catch((err: any) => {
       up_loading.value = false;
@@ -7359,24 +7280,26 @@ const vp_image_midj = (
   up_loading.value = true;
   is_sc.value = true;
   draw_loading.value = true;
-  now_draw_id.value = 0;
+  // now_draw_id.value = 0;
   now_draw.value = "";
 
   client
-    .v_midj_index({
-      prompt: title,
+    .up_midj_index({
+      action: "VARIATION",
       index: index,
-      prompt_id: prompt_id,
-      message_id: message_id,
+      taskId: now_draw_id.value,
     })
     .then((res: any) => {
-      up_loading.value = false;
-      r_images.value = res._rawValue.data;
-      is_finish.value = false;
-      is_sc.value = false;
-      draw_loading.value = false;
-      get_choose_index(res._rawValue.id);
-      get_me_d();
+      const { data } = res;
+      now_draw_id.value = res.result;
+      midj_ai_draw_check(data.result);
+      // up_loading.value = false;
+      // r_images.value = res._rawValue.data;
+      // is_finish.value = false;
+      // is_sc.value = false;
+      // draw_loading.value = false;
+      // get_choose_index(res._rawValue.id);
+      // get_me_d();
     })
     .catch((err: any) => {
       up_loading.value = false;
@@ -7394,7 +7317,7 @@ const midj_ai_describe = () => {
   now_draw.value = "";
   client
     .midjourney_describe({
-      imageUrl: text_imageUrl.value,
+      base64: text_imageUrl.value,
     })
     .then((res: any) => {
       up_loading.value = false;
@@ -7441,6 +7364,10 @@ const del_me_draw = (id: number) => {
 <style lang="scss">
 @import "@/assets/styles/main.css";
 @import "@/assets/styles/mobile.css";
+
+.bg-white {
+  background: #fff !important;
+}
 
 .loader {
   top: 50%;
