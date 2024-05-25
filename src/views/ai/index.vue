@@ -11,162 +11,17 @@
         size="large"
         class="justify-content-center mt-2"
       >
-        <!-- <a-tab-pane title="普通绘画" key="gpt">
-          <div class="pb-32">
-            <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
-              <div class="relative">
-                <div>
-                  <h5
-                    class="left-panel-setting-block__title font-18 text-gray-2 mr-4 flex justify-between"
-                  >
-                    绘画描述
-                    <a-tooltip content="翻译为英文">
-                      <a-button
-                        size="small"
-                        @click="translate()"
-                        :loading="draw_loading"
-                        type="primary"
-                        status="success"
-                        shape="round"
-                      >
-                        <template #icon>
-                          <icon-language />
-                        </template>
-                      </a-button>
-                    </a-tooltip>
-                  </h5>
-                </div>
-              </div>
-              <div class="mt-2 fade-box draw_des_clip">
-                <section
-                  class="w-full relative border-gray-5 pb-0 rounded-8 bg-white-1 hover:border-primary-base transition-border"
-                >
-                  <a-textarea
-                    v-model="input2"
-                    class="bg-white pb-10"
-                    :auto-size="{ minRows: 7, maxRows: 7 }"
-                    type="textarea"
-                    :max-length="2000"
-                    show-word-limit
-                    allow-clear
-                    placeholder="请用英文输入Prompt，参考形式：画面主体，细节描述，修饰词"
-                  />
-                  <div
-                    class="des_check z-10 z-10 flex position-absolute left-2 bottom-3 cursor-pointer"
-                  >
-                    <a-trigger
-                      :popup-translate="[100, 0]"
-                      trigger="click"
-                      :unmount-on-close="false"
-                    >
-                      <div>
-                        <icon-relation />
-                        联想
-                      </div>
-                      <template #content>
-                        <div
-                          class="bg-white siwei_contact w-100 p-4 rounded-xl shadow-sm"
-                        >
-                          <h5>绘画联想</h5>
-                          <a-textarea
-                            v-model="draw_ai"
-                            :auto-size="{ minRows: 3, maxRows: 5 }"
-                            type="textarea"
-                            allow-clear
-                            placeholder="请输入简单的描述，AI将智能输出绘图内容"
-                          />
-                          <a-button
-                            type="primary"
-                            class="w-100 mt-2 mb-2"
-                            :loading="draw_loading"
-                            @click="send_ai_draw()"
-                            >生成绘图描述
-                          </a-button>
-                        </div>
-                      </template>
-                    </a-trigger>
-                    <div class="cursor-pointer ml-1.5" @click="des_send()">
-                      <icon-skin />
-                      描述咒语
-                    </div>
-                  </div>
-                </section>
-                <div class="w-full flex align-items-center">
-                  <p class="flex-none text-gray-3 text-12">示范:</p>
-                  <ul
-                    class="flex align-items-center flex-grow whitespace-nowrap scrollbar-none"
-                  >
-                    <li
-                      class="cursor-pointer text-gray-2 text-12 ml-1"
-                      @click="input2 = all_prompt[0]"
-                    >
-                      花海女孩
-                    </li>
-                    <li
-                      class="cursor-pointer text-gray-2 text-12 ml-1"
-                      @click="input2 = all_prompt[1]"
-                    >
-                      办公室男人
-                    </li>
-                  </ul>
-                  <icon-refresh
-                    class="cursor-pointer"
-                    @click="change_prompt()"
-                  />
-                </div>
-              </div>
-            </section>
-
-            <section class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">
-              <div class="flex-center justify-between relative">
-                <div class="flex-center">
-                  <h5
-                    class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between"
-                  >
-                    图片尺寸<a-tooltip content="图片固定高度和宽度生成">
-                      <icon-exclamation-circle />
-                    </a-tooltip>
-                  </h5>
-                </div>
-              </div>
-              <div class="flex items-center justify-between space-x-1 aspect">
-                <button
-                  v-for="(s, s_index) in all_size"
-                  :class="size == s.value ? 'active' : ''"
-                  @click="change_size(s.value)"
-                  class="flex-1 border-2 rounded aspect-item dark:border-neutral-700"
-                >
-                  <div
-                    class="flex items-center justify-center w-5 h-5 mx-auto my-2 aspect-box-wrapper"
-                  >
-                    <div
-                      class="border-2 border-gray-600 rounded aspect-box dark:border-neutral-700"
-                      :style="`width:${s.width}%;height:${s.height}%`"
-                    ></div>
-                  </div>
-                  <p class="mb-1 text-sm text-center">
-                    {{ s.label }}
-                  </p>
-                </button>
-              </div>
-            </section>
-          </div>
-        </a-tab-pane> -->
-        <a-tab-pane title="专业绘画" key="midj">
+        <a-tab-pane title="mj" key="mj">
           <div class="w-full flex justify-center">
-            <a-radio-group
-              class="mb-2"
-              type="button"
-              v-model="midj_check_radio"
-            >
-              <a-radio value="basic_do">基本操作</a-radio>
-              <a-radio value="text_to_img">图生文</a-radio>
+            <a-radio-group class="mb-2" type="button" v-model="check_radio">
+              <a-radio value="mj_text_to_img">文生图</a-radio>
+              <a-radio value="mj_img_to_text">图生文</a-radio>
             </a-radio-group>
           </div>
 
           <section
             class="draw_infomation pb-32"
-            v-if="midj_check_radio == 'basic_do'"
+            v-if="check_radio == 'mj_text_to_img'"
           >
             <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
               <div class="relative">
@@ -175,20 +30,6 @@
                     class="left-panel-setting-block__title font-18 text-gray-2 mr-4 flex justify-between"
                   >
                     绘画描述
-                    <a-tooltip content="翻译为英文">
-                      <a-button
-                        size="small"
-                        @click="translate()"
-                        :loading="draw_loading"
-                        type="primary"
-                        status="success"
-                        shape="round"
-                      >
-                        <template #icon>
-                          <icon-language />
-                        </template>
-                      </a-button>
-                    </a-tooltip>
                   </h5>
                 </div>
               </div>
@@ -357,7 +198,6 @@
               </template>
               删除图片
             </a-button>
-
             <!--model select-->
             <div class="left-panel-setting-block__header">
               <div class="left-panel-setting-block__title mt-2 fs-5">
@@ -692,7 +532,10 @@
               </div>
             </div>
           </section>
-          <section class="draw_infomation pb-32" v-else>
+          <section
+            class="draw_infomation pb-32"
+            v-else-if="check_radio == 'mj_img_to_text'"
+          >
             <a-upload
               class="avatar-uploader"
               :action="''"
@@ -790,6 +633,20 @@
             </a-button>
           </section>
         </a-tab-pane>
+        <a-tab-pane title="sd" key="sd">
+          <div class="w-full flex justify-center">
+            <a-radio-group class="mb-2" type="button" v-model="check_radio">
+              <a-radio value="sd_text_to_img">文生图</a-radio>
+              <a-radio value="sd_img_to_img">图生图</a-radio>
+            </a-radio-group>
+          </div>
+          <template v-if="check_radio === 'sd_text_to_img'">
+            <SDTxtToImg @update-form="changeSDTxtToImgValue"></SDTxtToImg>
+          </template>
+          <template v-if="check_radio === 'sd_img_to_img'">
+            <SDImgToImg @update-form="changeSDImgToImgValue"></SDImgToImg>
+          </template>
+        </a-tab-pane>
       </a-tabs>
 
       <div
@@ -797,6 +654,7 @@
       >
         <div class="flex mb-2"></div>
         <a-button
+          v-if="check_radio !== 'mj_img_to_text'"
           :loading="draw_loading"
           @click="midj_ai_draw_send()"
           class="w-100"
@@ -1419,7 +1277,7 @@
                                 <a-popover position="top">
                                   <a-button
                                     type="primary"
-                                    v-if="midj_check_radio == 'text_to_img'"
+                                    v-if="check_radio == 'mj_text_to_img'"
                                   >
                                     <template #icon>
                                       <icon-select-all />
@@ -2083,1094 +1941,6 @@
       </div>
     </a-spin>
 
-    <a-drawer
-      v-model:visible="drawer"
-      title="配置"
-      placement="left"
-      class="left_ai_draw"
-      width="80%"
-    >
-      <a-tabs
-        @tab-click="handleClick"
-        v-model="activeDraw"
-        type="capsule"
-        size="large"
-        class="justify-content-center mt-2"
-      >
-        <a-tab-pane
-          title="普通绘画"
-          key="gpt"
-          v-if="counter.setting.is_open_normal_draw == 1"
-        >
-          <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
-            <div class="relative">
-              <div>
-                <h5
-                  class="left-panel-setting-block__title font-18 text-gray-2 mr-4 flex justify-between"
-                >
-                  绘画描述
-                  <a-tooltip content="翻译为英文">
-                    <a-button
-                      size="small"
-                      @click="translate()"
-                      :loading="draw_loading"
-                      type="primary"
-                      status="success"
-                      shape="round"
-                    >
-                      <template #icon>
-                        <icon-language />
-                      </template>
-                    </a-button>
-                  </a-tooltip>
-                </h5>
-              </div>
-            </div>
-            <div class="mt-2 fade-box draw_des_clip">
-              <section
-                class="w-full relative border-gray-5 pb-0 rounded-8 bg-white-1 hover:border-primary-base transition-border"
-              >
-                <a-textarea
-                  v-model="input2"
-                  class="bg-white pb-10"
-                  :auto-size="{ minRows: 7, maxRows: 7 }"
-                  type="textarea"
-                  :max-length="2000"
-                  show-word-limit
-                  allow-clear
-                  placeholder="请用英文输入Prompt，参考形式：画面主体，细节描述，修饰词"
-                />
-                <div
-                  class="des_check z-10 flex position-absolute left-2 bottom-3 cursor-pointer"
-                >
-                  <a-trigger
-                    :popup-translate="[100, 0]"
-                    trigger="click"
-                    position="bottom"
-                    auto-fit-position
-                    :unmount-on-close="false"
-                  >
-                    <div>
-                      <icon-relation />
-                      联想
-                    </div>
-                    <template #content>
-                      <div
-                        class="bg-white siwei_contact w-100 p-4 rounded-xl shadow-sm"
-                      >
-                        <h5>绘画联想</h5>
-                        <a-textarea
-                          v-model="draw_ai"
-                          :auto-size="{ minRows: 3, maxRows: 5 }"
-                          type="textarea"
-                          allow-clear
-                          placeholder="请输入简单的描述，AI将智能输出绘图内容"
-                        />
-                        <a-button
-                          type="primary"
-                          class="w-100 mt-2 mb-2"
-                          :loading="draw_loading"
-                          @click="send_ai_draw()"
-                          >生成绘图描述
-                        </a-button>
-                      </div>
-                    </template>
-                  </a-trigger>
-                  <div class="cursor-pointer ml-1.5" @click="des_send()">
-                    <icon-skin />
-                    描述咒语
-                  </div>
-                </div>
-              </section>
-              <div class="w-full flex align-items-center">
-                <p class="flex-none text-gray-3 text-12">示范:</p>
-                <ul
-                  class="flex align-items-center flex-grow whitespace-nowrap scrollbar-none"
-                >
-                  <li
-                    class="cursor-pointer text-gray-2 text-12 ml-1"
-                    @click="input2 = all_prompt[0]"
-                  >
-                    花海女孩
-                  </li>
-                  <li
-                    class="cursor-pointer text-gray-2 text-12 ml-1"
-                    @click="input2 = all_prompt[1]"
-                  >
-                    办公室男人
-                  </li>
-                </ul>
-                <icon-refresh class="cursor-pointer" @click="change_prompt()" />
-              </div>
-            </div>
-          </section>
-
-          <section class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">
-            <div class="flex-center justify-between relative">
-              <div class="flex-center">
-                <h5
-                  class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between"
-                >
-                  图片尺寸<a-tooltip content="图片固定高度和宽度生成">
-                    <icon-exclamation-circle />
-                  </a-tooltip>
-                </h5>
-              </div>
-            </div>
-            <div class="flex items-center justify-between space-x-1 aspect">
-              <button
-                v-for="(s, s_index) in all_size"
-                :class="size == s.value ? 'active' : ''"
-                @click="change_size(s.value)"
-                class="flex-1 border-2 rounded aspect-item dark:border-neutral-700"
-              >
-                <div
-                  class="flex items-center justify-center w-5 h-5 mx-auto my-2 aspect-box-wrapper"
-                >
-                  <div
-                    class="border-2 border-gray-600 rounded aspect-box dark:border-neutral-700"
-                    :style="`width:${s.width}%;height:${s.height}%`"
-                  ></div>
-                </div>
-                <p class="mb-1 text-sm text-center">
-                  {{ s.label }}
-                </p>
-              </button>
-            </div>
-          </section>
-        </a-tab-pane>
-        <a-tab-pane
-          title="精致绘画"
-          key="dream"
-          v-if="counter.setting.is_dream_open == 1"
-        >
-          <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
-            <div class="relative">
-              <div>
-                <h5
-                  class="left-panel-setting-block__title font-18 text-gray-2 mr-4 flex justify-between"
-                >
-                  绘画描述
-                  <a-tooltip content="翻译为英文">
-                    <a-button
-                      size="small"
-                      @click="translate()"
-                      :loading="draw_loading"
-                      type="primary"
-                      status="success"
-                      shape="round"
-                    >
-                      <template #icon>
-                        <icon-language />
-                      </template>
-                    </a-button>
-                  </a-tooltip>
-                </h5>
-              </div>
-            </div>
-            <div class="mt-2 fade-box draw_des_clip">
-              <section
-                class="w-full relative border-gray-5 pb-0 rounded-8 bg-white-1 hover:border-primary-base transition-border"
-              >
-                <a-textarea
-                  v-model="input2"
-                  class="bg-white pb-10"
-                  :auto-size="{ minRows: 7, maxRows: 7 }"
-                  type="textarea"
-                  :max-length="2000"
-                  show-word-limit
-                  allow-clear
-                  placeholder="请用英文输入Prompt，参考形式：画面主体，细节描述，修饰词"
-                />
-                <div
-                  class="des_check z-10 flex position-absolute left-2 bottom-3 cursor-pointer"
-                >
-                  <a-trigger
-                    :popup-translate="[100, 0]"
-                    trigger="click"
-                    position="bottom"
-                    auto-fit-position
-                    :unmount-on-close="false"
-                  >
-                    <div>
-                      <icon-relation />
-                      联想
-                    </div>
-                    <template #content>
-                      <div
-                        class="bg-white siwei_contact w-100 p-4 rounded-xl shadow-sm"
-                      >
-                        <h5>绘画联想</h5>
-                        <a-textarea
-                          v-model="draw_ai"
-                          :auto-size="{ minRows: 3, maxRows: 5 }"
-                          type="textarea"
-                          allow-clear
-                          placeholder="请输入简单的描述，AI将智能输出绘图内容"
-                        />
-                        <a-button
-                          type="primary"
-                          class="w-100 mt-2 mb-2"
-                          :loading="draw_loading"
-                          @click="send_ai_draw()"
-                          >生成绘图描述
-                        </a-button>
-                      </div>
-                    </template>
-                  </a-trigger>
-                  <div class="cursor-pointer ml-1.5" @click="des_send()">
-                    <icon-skin />
-                    描述咒语
-                  </div>
-                </div>
-              </section>
-              <div class="w-full flex align-items-center">
-                <p class="flex-none text-gray-3 text-12">示范:</p>
-                <ul
-                  class="flex align-items-center flex-grow whitespace-nowrap scrollbar-none"
-                >
-                  <li
-                    class="cursor-pointer text-gray-2 text-12 ml-1"
-                    @click="input2 = all_prompt[0]"
-                  >
-                    花海女孩
-                  </li>
-                  <li
-                    class="cursor-pointer text-gray-2 text-12 ml-1"
-                    @click="input2 = all_prompt[1]"
-                  >
-                    办公室男人
-                  </li>
-                </ul>
-                <icon-refresh class="cursor-pointer" @click="change_prompt()" />
-              </div>
-            </div>
-          </section>
-          <section class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">
-            <div class="flex-center justify-between relative">
-              <div class="flex-center">
-                <h5
-                  class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between"
-                >
-                  图片尺寸
-                  <a-tooltip content="图片固定高度和宽度生成">
-                    <icon-exclamation-circle />
-                  </a-tooltip>
-                </h5>
-              </div>
-            </div>
-            <div class="slider-demo-block flex-wrap">
-              <span class="demonstration">图片高度：</span>
-
-              <a-slider
-                class="ml-1.5 mr-1.5"
-                :min="512"
-                :max="1024"
-                v-model="value_height"
-                :step="64"
-                show-ticks
-              />
-            </div>
-            <div class="slider-demo-block flex-wrap">
-              <span class="demonstration">图片宽度：</span>
-              <a-slider
-                class="ml-1.5 mr-1.5"
-                :min="512"
-                :max="1024"
-                v-model="value_width"
-                :step="64"
-                show-ticks
-              />
-            </div>
-          </section>
-          <section class="flex flex-col rounded-10 p-3 bg-gray-7 mt-3">
-            <div class="flex-center justify-between relative">
-              <div class="flex-center">
-                <h5
-                  class="mb-3 left-panel-setting-block__title font-14 text-gray-2 mr-4 flex justify-between"
-                >
-                  图片数量
-                </h5>
-              </div>
-            </div>
-            <div class="UXmDHLrm">
-              <span
-                v-for="(i, i_index) in images_list"
-                :key="i_index"
-                :class="image_select == i.value ? 'OMJ2YPhL' : ''"
-                @click="change_i(i.value)"
-                >{{ i.name }}</span
-              >
-            </div>
-          </section>
-        </a-tab-pane>
-        <a-tab-pane
-          title="专业绘画"
-          key="midj"
-          v-if="counter.setting.midjourney_is_open == 1"
-        >
-          <div class="w-full flex justify-center">
-            <a-radio-group
-              class="mb-2"
-              type="button"
-              v-model="midj_check_radio"
-            >
-              <a-radio value="basic_do">基本操作</a-radio>
-              <a-radio value="text_to_img">图生文</a-radio>
-            </a-radio-group>
-          </div>
-
-          <section
-            class="draw_infomation pb-32"
-            v-if="midj_check_radio == 'basic_do'"
-          >
-            <section class="flex flex-col space-y-16 rounded-10 p-4 bg-gray-7">
-              <div class="relative">
-                <div>
-                  <h5
-                    class="left-panel-setting-block__title font-18 text-gray-2 mr-4 flex justify-between"
-                  >
-                    绘画描述
-                    <a-tooltip content="翻译为英文">
-                      <a-button
-                        size="small"
-                        @click="translate()"
-                        :loading="draw_loading"
-                        type="primary"
-                        status="success"
-                        shape="round"
-                      >
-                        <template #icon>
-                          <icon-language />
-                        </template>
-                      </a-button>
-                    </a-tooltip>
-                  </h5>
-                </div>
-              </div>
-              <div class="mt-2 fade-box draw_des_clip">
-                <section
-                  class="w-full relative border-gray-5 pb-0 rounded-8 bg-white-1 hover:border-primary-base transition-border"
-                >
-                  <a-textarea
-                    v-model="input2"
-                    class="bg-white pb-10"
-                    :auto-size="{ minRows: 7, maxRows: 7 }"
-                    type="textarea"
-                    :max-length="2000"
-                    show-word-limit
-                    allow-clear
-                    placeholder="请用英文输入Prompt，参考形式：画面主体，细节描述，修饰词"
-                  />
-                  <div
-                    class="des_check z-10 flex position-absolute left-2 bottom-3 cursor-pointer"
-                  >
-                    <a-trigger
-                      :popup-translate="[100, 0]"
-                      trigger="click"
-                      position="bottom"
-                      auto-fit-position
-                      :unmount-on-close="false"
-                    >
-                      <div>
-                        <icon-relation />
-                        联想
-                      </div>
-                      <template #content>
-                        <div
-                          class="bg-white siwei_contact w-100 p-4 rounded-xl shadow-sm"
-                        >
-                          <h5>绘画联想</h5>
-                          <a-textarea
-                            v-model="draw_ai"
-                            :auto-size="{ minRows: 3, maxRows: 5 }"
-                            type="textarea"
-                            allow-clear
-                            placeholder="请输入简单的描述，AI将智能输出绘图内容"
-                          />
-                          <a-button
-                            type="primary"
-                            class="w-100 mt-2 mb-2"
-                            :loading="draw_loading"
-                            @click="send_ai_draw()"
-                            >生成绘图描述
-                          </a-button>
-                        </div>
-                      </template>
-                    </a-trigger>
-                    <div class="cursor-pointer ml-1.5" @click="des_send()">
-                      <icon-skin />
-                      描述咒语
-                    </div>
-                  </div>
-                </section>
-                <div class="w-full flex align-items-center">
-                  <p class="flex-none text-gray-3 text-12">示范:</p>
-                  <ul
-                    class="flex align-items-center flex-grow whitespace-nowrap scrollbar-none"
-                  >
-                    <li
-                      class="cursor-pointer text-gray-2 text-12 ml-1"
-                      @click="input2 = all_prompt[0]"
-                    >
-                      花海女孩
-                    </li>
-                    <li
-                      class="cursor-pointer text-gray-2 text-12 ml-1"
-                      @click="input2 = all_prompt[1]"
-                    >
-                      办公室男人
-                    </li>
-                  </ul>
-                  <icon-refresh
-                    class="cursor-pointer"
-                    @click="change_prompt()"
-                  />
-                </div>
-              </div>
-            </section>
-            <a-upload
-              class="avatar-uploader"
-              :action="actions"
-              :show-file-list="false"
-              :headers="{ Authorization: 'Bearer ' + token }"
-              @before-upload="beforeUpload"
-              @success="picSuccess"
-              draggable
-            >
-              <template #upload-button>
-                <div>
-                  <div
-                    class="arco-upload-list-picture mt-2 rounded-10 w-100 custom-upload-avatar"
-                    v-if="imageUrl"
-                  >
-                    <div
-                      class="edui-left-panel__reference-img-container mt-0 rounded-10"
-                    >
-                      <span class="left-panel-setting-block__title"
-                        >参考图</span
-                      >
-                      <div class="upload-file">
-                        <div
-                          class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                          style="width: 56px; height: 56px"
-                        >
-                          <img class="w-auto rounded-10" :src="imageUrl" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="arco-upload-list-picture-mask rounded-10">
-                      <IconPlus />
-                    </div>
-                  </div>
-                  <div
-                    v-else
-                    class="edui-left-panel__reference-img-container rounded-10"
-                  >
-                    <span class="left-panel-setting-block__title">参考图</span>
-                    <div class="upload-file">
-                      <div
-                        class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                        style="width: 56px; height: 56px"
-                      >
-                        <svg
-                          role="img"
-                          aria-label="cloud-upload"
-                          focusable="false"
-                          data-icon="cloud-upload"
-                          aria-hidden="true"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="gd_design_icon gd_design_icon-cloud-upload"
-                        >
-                          <path
-                            d="M12 3.25C9.23322 3.25 6.85685 4.91427 5.81432 7.29442C3.23861 7.63053 1.25 9.83289 1.25 12.5C1.25 15.3995 3.60051 17.75 6.5 17.75H8V16.25H6.5C4.42893 16.25 2.75 14.5711 2.75 12.5C2.75 10.4736 4.35756 8.82234 6.36655 8.75232L6.87754 8.73451L7.04768 8.25236C7.76807 6.211 9.71438 4.75 12 4.75C14.2856 4.75 16.2319 6.211 16.9523 8.25236L17.1225 8.73451L17.6334 8.75232C19.6424 8.82234 21.25 10.4736 21.25 12.5C21.25 14.5711 19.5711 16.25 17.5 16.25H16V17.75H17.5C20.3995 17.75 22.75 15.3995 22.75 12.5C22.75 9.83289 20.7614 7.63052 18.1857 7.29442C17.1431 4.91427 14.7668 3.25 12 3.25Z"
-                            fill="currentColor"
-                          ></path>
-                          <path
-                            d="M12.75 13.1013V20.5H11.25V13.1013L9.48014 14.5762L8.51986 13.4238L12 10.5237L15.4801 13.4238L14.5199 14.5762L12.75 13.1013Z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </a-upload>
-            <a-button
-              type="primary"
-              status="danger"
-              @click="deletePic"
-              class="w-100"
-              shape="round"
-              v-if="imageUrl"
-            >
-              <template #icon>
-                <icon-delete />
-              </template>
-              删除图片
-            </a-button>
-
-            <!--model select-->
-            <div class="left-panel-setting-block__header">
-              <div class="left-panel-setting-block__title mt-2 fs-5">
-                模型选择
-                <a-tooltip
-                  content="MJ：通用模型
-                        NIJI：动漫风格模型"
-                >
-                  <icon-exclamation-circle class="font-18 ml-1" />
-                </a-tooltip>
-              </div>
-            </div>
-            <a-row :gutter="10" class="flex justify-content-center mj_version">
-              <a-col
-                :span="12"
-                class="version-item"
-                @click="version = 1"
-                :class="version == 1 ? 'active' : ''"
-              >
-                <button
-                  class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                >
-                  <div
-                    class="absolute flex items-center justify-center w-full h-full"
-                  >
-                    <div class="model-card__title"><span>MJ</span></div>
-                  </div>
-                  <img
-                    class="object-cover w-full h-full rounded-xl"
-                    src="@/assets/images/mj.jpg"
-                  />
-                </button>
-              </a-col>
-              <a-col
-                :span="12"
-                class="version-item"
-                @click="version = 2"
-                :class="version == 2 ? 'active' : ''"
-              >
-                <button
-                  class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                >
-                  <div
-                    class="absolute flex items-center justify-center w-full h-full"
-                  >
-                    <div class="model-card__title"><span>NIJI</span></div>
-                  </div>
-                  <img
-                    class="object-cover w-full h-full rounded-xl"
-                    src="@/assets/images/niji.jpg"
-                  />
-                </button>
-              </a-col>
-            </a-row>
-            <div class="flex items-center justify-between space-x-2 mt-2">
-              <span class="w-[70px]">版本</span>
-              <div class="flex-1" v-if="version == 1">
-                <a-select v-model="version_me" placeholder="选择版本">
-                  <a-option
-                    v-for="item of mj_version"
-                    :value="item.value"
-                    :label="item.label"
-                  />
-                </a-select>
-              </div>
-              <div class="flex-1" v-else>
-                <a-select v-model="version_nj" placeholder="选择版本">
-                  <a-option
-                    v-for="item of nj_version"
-                    :value="item.value"
-                    :label="item.label"
-                  />
-                </a-select>
-              </div>
-            </div>
-            <div
-              class="flex items-center justify-between space-x-2 mt-2"
-              v-if="version == 1"
-            >
-              <span class="w-[70px]">RAW</span>
-              <div class="flex-1">
-                <a-switch v-model="mj_row" />
-              </div>
-              <a-tooltip
-                content="呈现的人物写实感更加逼真,人物细节、光源、流畅度也更加接近原始作品"
-              >
-                <icon-exclamation-circle class="font-18 ml-1" />
-              </a-tooltip>
-            </div>
-            <div class="mt-2" v-if="version == 2">
-              <div class="left-panel-setting-block__header">
-                <div class="left-panel-setting-block__title mt-2 fs-5">
-                  风格选择
-                  <a-tooltip
-                    content="根据你想生成的图片选择对应的风格，效果更佳哦"
-                  >
-                    <icon-exclamation-circle class="font-18 ml-1" />
-                  </a-tooltip>
-                </div>
-              </div>
-              <a-row :gutter="10" class="mj_version style_choose">
-                <a-col
-                  :span="12"
-                  class="version-item mb-2"
-                  @click="niji_style = 1"
-                  :class="niji_style == 1 ? 'active' : ''"
-                >
-                  <button
-                    class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                  >
-                    <div
-                      class="absolute flex items-center justify-center w-full h-full"
-                    >
-                      <div class="model-card__title"><span>动漫</span></div>
-                    </div>
-                    <img
-                      class="object-cover w-full h-full rounded-xl"
-                      src="@/assets/images/normal_niji.png"
-                    />
-                  </button>
-                </a-col>
-                <a-col
-                  :span="12"
-                  class="version-item"
-                  @click="niji_style = 2"
-                  :class="niji_style == 2 ? 'active' : ''"
-                >
-                  <button
-                    class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                  >
-                    <div
-                      class="absolute flex items-center justify-center w-full h-full"
-                    >
-                      <div class="model-card__title"><span>可爱</span></div>
-                    </div>
-                    <img
-                      class="object-cover w-full h-full rounded-xl"
-                      src="@/assets/images/cute_niji.png"
-                    />
-                  </button>
-                </a-col>
-                <a-col
-                  :span="12"
-                  class="version-item"
-                  @click="niji_style = 3"
-                  :class="niji_style == 3 ? 'active' : ''"
-                >
-                  <button
-                    class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                  >
-                    <div
-                      class="absolute flex items-center justify-center w-full h-full"
-                    >
-                      <div class="model-card__title"><span>丰富</span></div>
-                    </div>
-                    <img
-                      class="object-cover w-full h-full rounded-xl"
-                      src="@/assets/images/dr_niji.png"
-                    />
-                  </button>
-                </a-col>
-                <a-col
-                  :span="12"
-                  class="version-item"
-                  @click="niji_style = 4"
-                  :class="niji_style == 4 ? 'active' : ''"
-                >
-                  <button
-                    class="relative overflow-hidden border-2 rounded-xl dark:border-neutral-700"
-                  >
-                    <div
-                      class="absolute flex items-center justify-center w-full h-full"
-                    >
-                      <div class="model-card__title"><span>风景</span></div>
-                    </div>
-                    <img
-                      class="object-cover w-full h-full rounded-xl"
-                      src="@/assets/images/scene_niji.png"
-                    />
-                  </button>
-                </a-col>
-              </a-row>
-            </div>
-
-            <!--model select end-->
-            <div class="left-panel-setting-block__header">
-              <div class="left-panel-setting-block__title mt-2 fs-5">
-                图片比例
-                <a-tooltip content="参数释义：生成图片尺寸比例">
-                  <icon-exclamation-circle class="font-18 ml-1" />
-                </a-tooltip>
-              </div>
-            </div>
-            <a-dropdown :popup-max-height="false" class="bili_main">
-              <section
-                class="w-full p-1 flex-center justify-between bg-white-1 rounded-8 cursor-pointer border hover:border-primary-base transition-border border-transparent"
-              >
-                <div class="flex-center space-x-20">
-                  <div class="flex-center bg-gray-6 w-20 rounded-6 pr-6">
-                    <div
-                      class="flex items-center justify-center w-5 h-5 mx-auto my-2 aspect-box-wrapper"
-                    >
-                      <div
-                        class="border-2 border-gray-600 rounded aspect-box dark:border-neutral-700"
-                        :style="`width:${bili[choose_bili - 1].width}%;height:${
-                          bili[choose_bili - 1].height
-                        }%`"
-                      ></div>
-                    </div>
-                    <span class="text-gray-2 text-12 font-600">{{
-                      bili[choose_bili - 1].name
-                    }}</span>
-                  </div>
-                  <span class="text-gray-2 text-14 font-600">{{
-                    bili[choose_bili - 1].title
-                  }}</span>
-                </div>
-              </section>
-              <template #content>
-                <a-doption
-                  v-for="(b, b_index) in bili"
-                  @click="choose_bili = b.value"
-                >
-                  <div class="w-100 flex justify-content-between p-1">
-                    <div class="flex-center rounded-6 w-20 bg-gray-6 mr-6 pl-2">
-                      <div
-                        class="flex items-center justify-center w-5 h-5 mx-auto my-2 aspect-box-wrapper"
-                      >
-                        <div
-                          class="border-2 border-gray-600 rounded aspect-box dark:border-neutral-700"
-                          :style="`width:${b.width}%;height:${b.height}%`"
-                        ></div>
-                      </div>
-                      <span
-                        class="text-14 ml-1 mr-3 text-gray-2 font-600 large:text-12 large:mr-0"
-                        >{{ b.name }}</span
-                      >
-                    </div>
-                    <span class="text-gray-2 text-14 font-600 left-83">{{
-                      b.title
-                    }}</span>
-                  </div>
-                </a-doption>
-              </template>
-            </a-dropdown>
-
-            <!--model can -->
-            <div class="left-panel-setting-block__header">
-              <div class="left-panel-setting-block__title mt-2 fs-5">参数</div>
-            </div>
-            <div class="flex items-center justify-between space-x-2 mt-2">
-              <span class="w-[70px]">画质</span>
-              <div class="flex-1">
-                <a-select v-model="pic_select" placeholder="画质选择">
-                  <a-option
-                    v-for="item of pic_quality"
-                    :value="item.value"
-                    :label="item.label"
-                  />
-                </a-select>
-              </div>
-              <a-tooltip content="参数释义：更高质量需要更长的时间处理更多细节">
-                <icon-exclamation-circle class="font-18 ml-1" />
-              </a-tooltip>
-            </div>
-            <div class="flex items-center justify-between space-x-2 mt-2">
-              <span class="w-[70px]">混乱</span>
-              <div class="flex-1">
-                <a-input-number v-model="chaos" :min="0" :max="100" />
-              </div>
-              <a-tooltip
-                content="参数释义：较高值将产生意想不到的结果和成分 较低值具有更可靠、可重复的结果"
-              >
-                <icon-exclamation-circle class="font-18 ml-1" />
-              </a-tooltip>
-            </div>
-            <div class="left-panel-setting-block__header">
-              <div class="left-panel-setting-block__title fs-5">
-                风格化
-                <a-tooltip
-                  content="参数释义：数值越高，画面表现也会更具丰富性和艺术性"
-                >
-                  <icon-exclamation-circle class="font-18 ml-1" />
-                </a-tooltip>
-              </div>
-            </div>
-            <div class="filters-container">
-              <div class="filters-wrapper filter-tabst">
-                <ul class="filter-tabs">
-                  <li>
-                    <button class="filter-button" @click="change_s(50, 0)">
-                      低
-                    </button>
-                  </li>
-                  <li>
-                    <button class="filter-button" @click="change_s(100, 100)">
-                      中
-                    </button>
-                  </li>
-                  <li>
-                    <button class="filter-button" @click="change_s(250, 200)">
-                      高
-                    </button>
-                  </li>
-                  <li>
-                    <button class="filter-button" @click="change_s(750, 300)">
-                      强烈
-                    </button>
-                  </li>
-                </ul>
-                <div class="filter-slider" aria-hidden="true">
-                  <div
-                    class="filter-slider-rect"
-                    :style="{ transform: 'translateX(' + xPos + '%)' }"
-                  >
-                    &nbsp;
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--<a-input-number class="mt-2" v-model="style" :min="0" :max="750"/>-->
-            <div class="left-panel-setting-block__header">
-              <div class="left-panel-setting-block__title mt-2 fs-5">
-                设定信息
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between space-x-2 mt-2">
-              <span class="w-[70px]">携带参数</span>
-              <div class="flex-1">
-                <a-switch v-model="is_pic" />
-              </div>
-            </div>
-          </section>
-          <section class="draw_infomation pb-32" v-else>
-            <a-upload
-              class="avatar-uploader"
-              :action="actions"
-              :show-file-list="false"
-              :headers="{ Authorization: 'Bearer ' + token }"
-              @before-upload="beforeUpload"
-              @success="TextSuccess"
-              draggable
-            >
-              <template #upload-button>
-                <div>
-                  <div
-                    class="arco-upload-list-picture mt-2 rounded-10 w-100 custom-upload-avatar"
-                    v-if="text_imageUrl"
-                  >
-                    <div
-                      class="edui-left-panel__reference-img-container mt-0 rounded-10"
-                    >
-                      <span class="left-panel-setting-block__title"
-                        >参考图</span
-                      >
-                      <div class="upload-file">
-                        <div
-                          class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                          style="width: 56px; height: 56px"
-                        >
-                          <img class="w-auto rounded-10" :src="text_imageUrl" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="arco-upload-list-picture-mask rounded-10">
-                      <IconPlus />
-                    </div>
-                  </div>
-                  <div
-                    v-else
-                    class="edui-left-panel__reference-img-container rounded-10"
-                  >
-                    <span class="left-panel-setting-block__title">参考图</span>
-                    <div class="upload-file">
-                      <div
-                        class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                        style="width: 56px; height: 56px"
-                      >
-                        <svg
-                          role="img"
-                          aria-label="cloud-upload"
-                          focusable="false"
-                          data-icon="cloud-upload"
-                          aria-hidden="true"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="gd_design_icon gd_design_icon-cloud-upload"
-                        >
-                          <path
-                            d="M12 3.25C9.23322 3.25 6.85685 4.91427 5.81432 7.29442C3.23861 7.63053 1.25 9.83289 1.25 12.5C1.25 15.3995 3.60051 17.75 6.5 17.75H8V16.25H6.5C4.42893 16.25 2.75 14.5711 2.75 12.5C2.75 10.4736 4.35756 8.82234 6.36655 8.75232L6.87754 8.73451L7.04768 8.25236C7.76807 6.211 9.71438 4.75 12 4.75C14.2856 4.75 16.2319 6.211 16.9523 8.25236L17.1225 8.73451L17.6334 8.75232C19.6424 8.82234 21.25 10.4736 21.25 12.5C21.25 14.5711 19.5711 16.25 17.5 16.25H16V17.75H17.5C20.3995 17.75 22.75 15.3995 22.75 12.5C22.75 9.83289 20.7614 7.63052 18.1857 7.29442C17.1431 4.91427 14.7668 3.25 12 3.25Z"
-                            fill="currentColor"
-                          ></path>
-                          <path
-                            d="M12.75 13.1013V20.5H11.25V13.1013L9.48014 14.5762L8.51986 13.4238L12 10.5237L15.4801 13.4238L14.5199 14.5762L12.75 13.1013Z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </a-upload>
-            <a-button
-              type="primary"
-              status="danger"
-              @click="text_imageUrl = ''"
-              class="w-100"
-              shape="round"
-              v-if="imageUrl"
-            >
-              <template #icon>
-                <icon-delete />
-              </template>
-              删除图片
-            </a-button>
-            <a-button
-              type="primary"
-              size="large"
-              class="w-full my-3 rounded"
-              @click="midj_ai_describe()"
-            >
-              <template #icon>
-                <icon-command />
-              </template>
-              生成图生文
-            </a-button>
-          </section>
-        </a-tab-pane>
-      </a-tabs>
-
-      <template #footer>
-        <div class="bg-white z-10 w-full h-110 bg-white-1">
-          <div class="flex mb-2">
-            <svg
-              t="1690301472439"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="6949"
-              width="24"
-              height="24"
-            >
-              <path
-                d="M366 174h292a10 10 0 0 1 10 10v322a10 10 0 0 1-10 10H366a10 10 0 0 1-10-10V184a10 10 0 0 1 10-10z"
-                fill="#4988FD"
-                p-id="6950"
-              ></path>
-              <path
-                d="M658 546H366c-22.056 0-40-17.944-40-40V184c0-22.056 17.944-40 40-40h292c22.056 0 40 17.944 40 40v322c0 22.056-17.944 40-40 40z m-272-60h252V204H386v282z"
-                fill="#4988FD"
-                p-id="6951"
-              ></path>
-              <path
-                d="M507.582 304.244a4 4 0 0 1 7.188 0l86.972 178.018c0.586 1.2 1.734 2.03 201.152 28.936a4.002 4.002 0 0 1 2.216 6.87l-144.304 136.648a4.006 4.006 0 0 0-1.184 3.622l35.488 194.43a3.998 3.998 0 0 1-5.798 4.252l-176.244-93.506a4 4 0 0 0-3.75 0l-176.252 93.508a4 4 0 0 1-5.802-4.252l35.478-194.43a4.006 4.006 0 0 0-1.184-3.622l-144.304-136.648a4.002 4.002 0 0 1 2.216-6.868c199.416-26.912 200.564-27.736 201.152-28.938l86.96-178.02z"
-                fill="#DFECFD"
-                p-id="6952"
-              ></path>
-              <path
-                d="M331.204 887.48a33.92 33.92 0 0 1-30.082-18.148 34.15 34.15 0 0 1-3.376-21.91l32.956-180.61-134.074-126.96c-13.616-12.902-14.196-34.464-1.302-48.074a34.1 34.1 0 0 1 20.136-10.308c104.136-14.054 161.49-21.976 184.632-25.53l80.534-164.864c5.66-11.588 17.654-19.078 30.552-19.078 5.146 0 10.31 1.196 14.936 3.458a34.138 34.138 0 0 1 15.618 15.634l80.54 164.848c23.146 3.554 80.498 11.476 184.634 25.528 18.572 2.502 31.652 19.656 29.15 38.234a34.138 34.138 0 0 1-10.318 20.146l-134.074 126.962 32.958 180.568a33.782 33.782 0 0 1-5.506 25.47 33.778 33.778 0 0 1-21.896 14.086c-7.242 1.318-15.208 0.138-21.874-3.368l-164.154-87.09-164.068 87.042a34.19 34.19 0 0 1-15.922 3.964z m-53.87-353.836l104.852 99.29a33.896 33.896 0 0 1 10.072 30.78l-25.848 141.656 128.848-68.36c9.79-5.19 22.078-5.184 31.85-0.01l128.854 68.364-25.852-141.64a33.904 33.904 0 0 1 10.052-30.778l104.868-99.302c-61.762-8.382-100.142-13.708-121.64-16.872-12.33-1.814-19.714-3.004-23.946-3.858-4.89-0.986-17.88-3.608-24.658-17.488l-63.608-130.192-63.6 130.196c-6.788 13.88-19.772 16.498-24.66 17.484-4.228 0.854-11.612 2.042-23.946 3.856-21.464 3.158-59.842 8.484-121.638 16.874z"
-                fill="#DFECFD"
-                p-id="6953"
-              ></path>
-              <path
-                d="M418 651a29.9 29.9 0 0 1-21.212-8.788l-66-66c-11.716-11.714-11.716-30.71 0-42.426 11.714-11.714 30.71-11.714 42.426 0l66 66c11.716 11.714 11.716 30.71 0 42.426A29.908 29.908 0 0 1 418 651z"
-                fill="#4988FD"
-                p-id="6954"
-              ></path>
-            </svg>
-            消耗{{ counter.setting.money_name_set }}：{{
-              activeDraw == "midj" ? mj_midj : ai_draw_pay
-            }}/次
-          </div>
-          <a-button
-            :loading="draw_loading"
-            v-if="activeDraw == 'gpt'"
-            @click="ai_draw()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'dream'"
-            @click="ai_draw_dreams()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'midj'"
-            @click="midj_ai_draw_send()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'baidu'"
-            @click="baidu_draw_send()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'yijian'"
-            @click="yijian_draw_send()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'ali'"
-            @click="ali_draw_send()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-          <a-button
-            :loading="draw_loading"
-            v-else-if="activeDraw == 'tencent'"
-            @click="ai_draw_tencent()"
-            class="w-100"
-            type="primary"
-            size="large"
-          >
-            <icon-image class="up_images" />
-            开始绘图
-          </a-button>
-        </div>
-      </template>
-    </a-drawer>
     <a-modal
       v-model:visible="beizhu_info"
       title="公开标题名称"
@@ -3343,6 +2113,8 @@ import { ref, onMounted, nextTick, watch } from "vue";
 import { useCounter } from "@/store/modules/counter";
 import * as client from "@/api/client";
 import { getToken } from "@/utils/auth";
+import SDTxtToImg from "./components/SDTxtToImg.vue";
+import SDImgToImg from "./components/SDImgToImg.vue";
 import {
   IconMenuUnfold,
   IconImage,
@@ -3395,7 +2167,8 @@ const imageUrl = ref("");
 const deletePic = () => {
   imageUrl.value = "";
 };
-const midj_check_radio = ref("basic_do");
+const check_radio = ref("mj_text_to_img");
+// const sd_check_radio = ref("text_to_img");
 const beforeUpload = (file: any) => {
   const isJPG = file.type === "image/jpeg";
   const isPNG = file.type === "image/png";
@@ -3452,7 +2225,7 @@ const BaiduSuccess = (currentFile) => {
   ElMessage.success("上传成功!");
   baidu_imageUrl.value = currentFile.response.data;
 };
-const activeDraw = ref("midj");
+const activeDraw = ref("mj");
 const onError = () => {
   console.log("error");
 };
@@ -3755,6 +2528,11 @@ const all_prompt = [
 ];
 const handleClick = (tab: any) => {
   activeDraw.value = tab;
+  if (tab === "mj") {
+    check_radio.value = "mj_text_to_img";
+  } else {
+    check_radio.value = "sd_text_to_img";
+  }
 };
 onMounted(() => {
   if (counter.setting.is_draw_yijian_open == 1) {
@@ -3969,11 +2747,6 @@ const stableArtists = ref([]);
 const styleDetails = ref([]);
 const systemPrompts = ref([]);
 
-const yijian_bili = ref(0);
-const yijian_version = ref(0);
-const yijian_guide_scale = ref(0);
-const yijian_engine = ref("");
-const yijian_id = ref(0);
 const get_yijian = () => {
   client
     .get_draw_selector()
@@ -3988,113 +2761,6 @@ const get_yijian = () => {
       console.log(err);
     });
 };
-const yijian_task = ref();
-const yijian_draw_send = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-  client
-    .run_yijian_ai({
-      prompt: input2.value,
-      ratio: yijian_bili.value,
-      style: yijian_version.value,
-      guide_scale: yijian_guide_scale.value,
-      engine: yijian_engine.value,
-    })
-    .then((res: any) => {
-      ElMessage.success("任务提交成功");
-      get_me_d();
-      yijian_task.value = setInterval(() => {
-        yijian_draw_check(res._rawValue.data);
-      }, 5000);
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-const yijian_draw_check = (task_id: any) => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-
-  draw_loading.value = true;
-  client
-    .yijian_draw_info({
-      uuid: task_id,
-      prompt: input2.value,
-    })
-    .then((res: any) => {
-      if (res._rawValue.status == 200) {
-        clearInterval(yijian_task.value);
-        yijian_task.value = null;
-        is_finish.value = true;
-        is_sc.value = false;
-        get_me_d();
-        draw_loading.value = false;
-        for (let i = 0; i < res._rawValue.data.length; i++) {
-          r_images.value.push(res._rawValue.data[i]);
-          clearInterval(yijian_task.value);
-        }
-      }
-    })
-    .catch((err: any) => {
-      clearInterval(yijian_task.value);
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-const yijian_choose = (sid: any, type: any) => {
-  if (type == "one") {
-    // 找到styleDetails[0]中的id匹配相关数据
-    for (let i = 0; i < styleDetails.value[0].length; i++) {
-      if (styleDetails.value[0][i].id == sid) {
-        yijian_id.value = styleDetails.value[0][i].id;
-        yijian_version.value = styleDetails.value[0][i].value;
-        yijian_guide_scale.value = styleDetails.value[0][i].default_guide_scale;
-        yijian_engine.value = styleDetails.value[0][i].engine;
-        break;
-      }
-    }
-  } else if (type == "two") {
-    for (let i = 0; i < styleDetails.value[1].length; i++) {
-      if (styleDetails.value[1][i].id == sid) {
-        yijian_id.value = styleDetails.value[1][i].id;
-        yijian_version.value = styleDetails.value[1][i].value;
-        yijian_guide_scale.value = styleDetails.value[1][i].default_guide_scale;
-        yijian_engine.value = styleDetails.value[1][i].engine;
-        break;
-      }
-    }
-  } else {
-    for (let i = 0; i < styleDetails.value[2].length; i++) {
-      if (styleDetails.value[2][i].id == sid) {
-        yijian_id.value = styleDetails.value[2][i].id;
-        yijian_version.value = styleDetails.value[2][i].value;
-        yijian_guide_scale.value = styleDetails.value[2][i].default_guide_scale;
-        yijian_engine.value = styleDetails.value[2][i].engine;
-        break;
-      }
-    }
-  }
-};
-
-const change_baidu_size = (s_v: string) => {
-  baidu_size.value = s_v;
-};
-const change_i = (i_v: number) => {
-  image_select.value = i_v;
-};
 const r_images = ref([]);
 const draw_loading = ref(false);
 const is_sc = ref(false);
@@ -4102,222 +2768,24 @@ const is_finish = ref(false);
 const activeName = ref("first");
 const me_draw = ref([]);
 const public_draw = ref([]);
-
-const change_draw = (v: string) => {
-  activeDraw.value = v;
-};
 const login_dialog = ref(false);
 
-const handleCancel = () => {
-  login_dialog.value = false;
+const SDTxtToImgForm = ref({});
+const changeSDTxtToImgValue = (val) => {
+  SDTxtToImgForm.value = val;
 };
 
-const ai_draw = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-
-  client
-    .ai_draw_openai({
-      prompt: input2.value,
-      size: size.value,
-      number: 1,
-    })
-    .then((res: any) => {
-      is_finish.value = true;
-      is_sc.value = false;
-      ElMessage.success("生成成功");
-      get_me_d();
-      draw_loading.value = false;
-      for (let i = 0; i < res._rawValue.data.length; i++) {
-        r_images.value.push(res._rawValue.data[i]);
-      }
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      is_finish.value = false;
-      draw_loading.value = false;
-    });
+const SDImgToImgForm = ref({});
+const changeSDImgToImgValue = (val) => {
+  SDImgToImgForm.value = val;
 };
 
-const ai_draw_tencent = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-
-  client
-    .tencent_draw({
-      prompt: input2.value,
-      size: tencent_size.value,
-      style: tencent_style_choose.value,
-      number: 1,
-    })
-    .then((res: any) => {
-      is_finish.value = true;
-      is_sc.value = false;
-      ElMessage.success("生成成功");
-      get_me_d();
-      draw_loading.value = false;
-      r_images.value.push(res._rawValue.data);
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      is_finish.value = false;
-      draw_loading.value = false;
-    });
-};
-const baidu_task = ref();
-const baidu_draw_send = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-  client
-    .baidu_draw_go({
-      prompt: input2.value,
-      number: image_select.value,
-      size: baidu_size.value,
-      image_url: baidu_imageUrl.value,
-    })
-    .then((res: any) => {
-      ElMessage.success("任务提交成功");
-      get_me_d();
-      baidu_task.value = setInterval(() => {
-        baidu_draw_check(res._rawValue.data);
-      }, 10000);
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-
-const baidu_draw_check = (task_id: any) => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  draw_loading.value = true;
-  client
-    .baidu_draw_info({
-      task_id: task_id,
-      prompt: input2.value,
-    })
-    .then((res: any) => {
-      if (res._rawValue.status == 200) {
-        clearInterval(baidu_task.value);
-        is_finish.value = true;
-        is_sc.value = false;
-        get_me_d();
-        draw_loading.value = false;
-        for (let i = 0; i < res._rawValue.data.length; i++) {
-          r_images.value.push(res._rawValue.data[i]);
-          clearInterval(baidu_task.value);
-        }
-      }
-    })
-    .catch((err: any) => {
-      clearInterval(baidu_task.value);
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-
-const ali_task = ref();
-const ali_draw_send = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-  ali_draw_go({
-    prompt: input2.value,
-    number: ali_select.value,
-    size: ali_size.value,
-    style: ali_style.value,
-  })
-    .then((res: any) => {
-      ElMessage.success("任务提交成功");
-      get_me_d();
-      ali_task.value = setInterval(() => {
-        ali_draw_check(res._rawValue.data);
-      }, 10000);
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-
-const ali_draw_check = (task_id: any) => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  draw_loading.value = true;
-  ali_draw_info({
-    task_id: task_id,
-    prompt: input2.value,
-  })
-    .then((res: any) => {
-      if (res._rawValue.status == 200) {
-        clearInterval(ali_task.value);
-        is_finish.value = true;
-        is_sc.value = false;
-        get_me_d();
-        draw_loading.value = false;
-        for (let i = 0; i < res._rawValue.data.length; i++) {
-          r_images.value.push(res._rawValue.data[i]);
-          clearInterval(ali_task.value);
-        }
-      }
-    })
-    .catch((err: any) => {
-      clearInterval(ali_task.value);
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
-
-const ai_draw_pay = ref("0");
 const me_draw_count = ref(0);
 const public_draw_count = ref(0);
 const me_page = ref(1);
 const public_page = ref(1);
 const me_page_size = ref(8);
 const public_page_size = ref(16);
-const ske_loading = ref(false);
 const token = ref(getToken());
 
 const check_time = ref(false);
@@ -4517,105 +2985,6 @@ const isInvalidJSON = (data: string) => {
     return false; // 解析失败，不是错误的 JSON 数据
   }
 };
-const send_ai_draw = async () => {
-  if (draw_ai.value == "") {
-    ElMessage.error("请输入内容");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  input2.value = "";
-  last_content.value = "";
-  draw_loading.value = true;
-  const res = await fetch(`${baseUrl}draw_ai_send`, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify({
-      content: draw_ai.value,
-      type: "draw_ai",
-    }),
-  });
-
-  if (res.status == 500) {
-    draw_loading.value = false;
-    ElMessage.error("服务器错误");
-    return false;
-  }
-  if (res.status == 401) {
-    draw_loading.value = false;
-    ElMessage.error("请先登录");
-    return false;
-  }
-  if (res.status == 402) {
-    draw_loading.value = false;
-    ElMessage.error("发送次数已达上限或余额不足");
-    return false;
-  }
-  if (res.status == 403) {
-    draw_loading.value = false;
-    ElMessage.error("禁止发送违禁词");
-    return false;
-  }
-  let partialData = "";
-  const stream = res.body?.getReader();
-  const onData = ({ value }: { value: Uint8Array }) => {
-    const chunk = new TextDecoder().decode(value);
-    if (isInvalidJSON(chunk)) {
-      const json = JSON.parse(chunk);
-      if (json.error && json.error.message) {
-        ElMessage.error(json.error.message);
-        return; // 或者进行其他错误处理
-      }
-      return;
-    }
-    const lines = (partialData + chunk).split("\n");
-
-    partialData = lines.pop() || "";
-
-    for (const line of lines) {
-      if (line.trim() === "data: [DONE]") {
-        // 如果是最后一行，跳过处理
-        continue;
-      }
-
-      try {
-        const trimmedLine = line.trim(); // 去除行首尾的空格
-        if (trimmedLine.startsWith("data:")) {
-          const jsonData = trimmedLine.slice(5); // 去除 "data:" 前缀
-          const json = JSON.parse(jsonData);
-          if (json.choices) {
-            for (const choice of json.choices) {
-              const content = choice.delta?.content;
-              if (content) {
-                last_content.value += content;
-                input2.value = last_content.value;
-              }
-              if (choice.finish_reason === "stop") {
-                break;
-              }
-            }
-          }
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  };
-
-  const read = async () => {
-    const result = await stream?.read();
-    if (result?.done) {
-      draw_loading.value = false;
-      draw_ai.value = "";
-    } else {
-      onData(result!);
-      await read();
-    }
-  };
-  await read();
-};
 // translate send
 const translate = async () => {
   if (input2.value == "") {
@@ -4708,44 +3077,6 @@ const translate = async () => {
   await read();
 };
 
-const value_height = ref(0);
-const value_width = ref(0);
-
-const ai_draw_dreams = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  is_sc.value = true;
-  draw_loading.value = true;
-  client
-    .ai_draw_dream({
-      prompt: input2.value,
-      size: size.value,
-      number: image_select.value,
-      height: value_height.value,
-      width: value_width.value,
-    })
-    .then((res: any) => {
-      is_finish.value = true;
-      is_sc.value = false;
-      ElMessage.success("生成成功");
-      get_me_d();
-      draw_loading.value = false;
-      for (let i = 0; i < res._rawValue.data.length; i++) {
-        r_images.value.push(res._rawValue.data[i]);
-      }
-    })
-    .catch((err: any) => {
-      ElMessage.error("生成失败");
-      is_sc.value = false;
-      draw_loading.value = false;
-    });
-};
 const infoLoading = ref(false);
 const now_draw = ref("");
 const now_draw_id = ref(0);
@@ -4775,48 +3106,28 @@ const get_choose_index = (id: any) => {
 };
 // midj
 const midj_ai_draw_send = () => {
-  if (input2.value == "") {
-    ElMessage.error("请填写关键词");
-    return false;
-  }
-  if (!token.value) {
-    login_dialog.value = true;
-    return false;
-  }
-  input2.value = input2.value.replace(/\n/g, "");
-  input2.value = input2.value.replace(/\s+/g, " ");
-  draw_loading.value = true;
-  if (is_pic.value == false) {
+  if (check_radio.value === "mj_text_to_img") {
+    if (input2.value == "") {
+      ElMessage.error("请填写关键词");
+      return false;
+    }
+    input2.value = input2.value.replace(/\n/g, "");
+    input2.value = input2.value.replace(/\s+/g, " ");
+    draw_loading.value = true;
+    const params = {
+      prompt: input2.value,
+      version: version.value,
+      version_ban: version.value == 1 ? version_me.value : version_nj.value,
+      mj_row: mj_row.value,
+      niji_style: niji_style.value,
+      pic_select: pic_select.value,
+      chaos: chaos.value,
+      style: style.value,
+      choose_bili: choose_bili.value,
+      imageUrl: imageUrl.value,
+    };
     client
-      .midj_ai_draw({
-        prompt: input2.value,
-      })
-      .then((res: any) => {
-        get_choose_index(res._rawValue.id);
-        midj_ai_draw_check(res.properties?.discordInstanceId);
-        ElMessage.success("提交成功");
-        draw_loading.value = false;
-        get_me_d();
-      })
-      .catch((err: any) => {
-        ElMessage.error("提交失败");
-        is_sc.value = false;
-        draw_loading.value = false;
-      });
-  } else {
-    client
-      .midj_ai_draw({
-        prompt: input2.value,
-        version: version.value,
-        version_ban: version.value == 1 ? version_me.value : version_nj.value,
-        mj_row: mj_row.value,
-        niji_style: niji_style.value,
-        pic_select: pic_select.value,
-        chaos: chaos.value,
-        style: style.value,
-        choose_bili: choose_bili.value,
-        imageUrl: imageUrl.value,
-      })
+      .midj_ai_draw(is_pic.value ? params : { prompt: params.prompt })
       .then((res: any) => {
         const { data } = res;
         now_draw_id.value = data.result;
@@ -4824,12 +3135,38 @@ const midj_ai_draw_send = () => {
         midj_ai_draw_check(data.result);
         ElMessage.success("提交成功");
         draw_loading.value = false;
-
-        // get_me_d();
       })
       .catch((err: any) => {
         ElMessage.error("提交失败");
         is_sc.value = false;
+        draw_loading.value = false;
+      });
+  } else if (check_radio.value === "sd_text_to_img") {
+    client
+      .sd_txt_to_img(SDTxtToImgForm.value)
+      .then((res: any) => {
+        const { data } = res;
+        now_draw_id.value = data.result;
+        sd_ai_draw_check(data.result);
+        ElMessage.success("提交成功");
+        draw_loading.value = false;
+      })
+      .catch((err: any) => {
+        ElMessage.error("提交失败");
+        draw_loading.value = false;
+      });
+  } else if (check_radio.value === "sd_img_to_img") {
+    client
+      .sd_img_to_img(SDImgToImgForm.value)
+      .then((res: any) => {
+        const { data } = res;
+        now_draw_id.value = data.result;
+        sd_ai_draw_check(data.result);
+        ElMessage.success("提交成功");
+        draw_loading.value = false;
+      })
+      .catch((err: any) => {
+        ElMessage.error("提交失败");
         draw_loading.value = false;
       });
   }
@@ -4872,6 +3209,39 @@ const midj_ai_draw_check = (midj_ai: any) => {
       console.log(err);
       ElMessage.error("生成失败");
       is_sc.value = false;
+      draw_loading.value = false;
+    });
+};
+// 轮询sd
+const sd_ai_draw_check = (id: any) => {
+  draw_loading.value = true;
+  is_finish.value = false;
+  client
+    .sd_search_id(id)
+    .then((res: any) => {
+      const { data } = res;
+      const progress = data.progress?.replace("%", "") || "";
+      if (!now_draw.value) {
+        now_draw.value = {};
+      }
+      now_draw.value.progress = Number(progress);
+
+      if (progress == "100") {
+        now_draw.value.image = data.imageUrl;
+        now_draw.value.title = data.prompt;
+        is_finish.value = true;
+        draw_loading.value = false;
+        ElMessage.success("生成成功");
+        no_img.value = "";
+      } else {
+        setTimeout(() => {
+          sd_ai_draw_check(id);
+        }, 3000);
+      }
+    })
+    .catch((err: any) => {
+      console.log(err);
+      ElMessage.error("生成失败");
       draw_loading.value = false;
     });
 };

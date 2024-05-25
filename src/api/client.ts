@@ -604,3 +604,16 @@ export const tencent_draw = (params: any) => {
 export const trans_voice = (params: any) => {
   return Http.post("/send_translate_voice", params);
 };
+
+// SD
+export const sd_txt_to_img = (params: any) => {
+  return Http.post("/sd/submit/txt2Img", params);
+};
+
+export const sd_img_to_img = (params: any) => {
+  return Http.post("/sd/submit/img2Img", params);
+};
+
+export const sd_search_id = (id: any) => {
+  return Http.get(`/sd/localTask/byTaskId/${id}`);
+};

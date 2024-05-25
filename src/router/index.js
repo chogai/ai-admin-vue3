@@ -43,18 +43,6 @@ export const constantRoutes = [
     hidden: true,
   },
   {
-    path: "",
-    component: Layout,
-    children: [
-      {
-        path: "/ai",
-        component: () => import("@/views/ai"),
-        name: "AI",
-        meta: { title: "ai", icon: "dashboard", affix: true },
-      },
-    ],
-  },
-  {
     path: "/register",
     component: () => import("@/views/register"),
     hidden: true,
@@ -79,6 +67,18 @@ export const constantRoutes = [
         component: () => import("@/views/index"),
         name: "Index",
         meta: { title: "首页", icon: "dashboard", affix: true },
+      },
+    ],
+  },
+  {
+    path: "",
+    component: Layout,
+    children: [
+      {
+        path: "/ai",
+        component: () => import("@/views/ai"),
+        name: "AI",
+        meta: { title: "Ai绘图", icon: "dashboard", affix: true },
       },
     ],
   },

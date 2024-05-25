@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -14,9 +14,8 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-  		// 设置对应的别名
-      "@service/*": ["./src/*"],
+    "paths": { 
+      "@/*": ["src/*"]
     }
   },
   "angularCompilerOptions": {
