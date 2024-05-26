@@ -101,7 +101,7 @@
         />
       </a-select>
       <!-- LORA -->
-      <div class="left-panel-setting-block__header">
+      <!-- <div class="left-panel-setting-block__header">
         <div class="left-panel-setting-block__title mt-2 fs-5">LORA</div>
       </div>
       <a-select v-model="form.lora" placeholder="请选择LORA">
@@ -110,7 +110,7 @@
           :value="item.value"
           :label="item.label"
         />
-      </a-select>
+      </a-select> -->
     </section>
   </div>
 </template>

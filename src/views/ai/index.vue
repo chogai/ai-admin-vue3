@@ -645,6 +645,7 @@
           </template>
           <template v-if="check_radio === 'sd_img_to_img'">
             <SDImgToImg @update-form="changeSDImgToImgValue"></SDImgToImg>
+            <!-- <CustomCanvas></CustomCanvas> -->
           </template>
         </a-tab-pane>
       </a-tabs>
@@ -2801,7 +2802,6 @@ const get_me_d = () => {
     .then((res: any) => {
       me_draw.value = res._rawValue.data;
       me_draw_count.value = res._rawValue.count;
-      ai_draw_pay.value = res._rawValue.dw_m;
       mj_midj.value = res._rawValue.mj_m;
       for (let i = 0; i < me_draw.value.length; i++) {
         if (
@@ -3190,7 +3190,7 @@ const midj_ai_draw_check = (midj_ai: any) => {
 
       if (progress == "100") {
         // r_images.value = data.imageUrl
-        now_draw.value.image = data.imageUrl;
+        now_draw.value.image = data.imageLoacalUrl;
         now_draw.value.title = data.prompt;
         is_finish.value = true;
         is_sc.value = false;
@@ -3227,7 +3227,7 @@ const sd_ai_draw_check = (id: any) => {
       now_draw.value.progress = Number(progress);
 
       if (progress == "100") {
-        now_draw.value.image = data.imageUrl;
+        now_draw.value.image = data.imageLoacalUrl;
         now_draw.value.title = data.prompt;
         is_finish.value = true;
         draw_loading.value = false;

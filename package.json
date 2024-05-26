@@ -29,10 +29,12 @@
     "pinia": "2.1.7",
     "vue": "3.3.9",
     "vue-cropper": "1.1.1",
-    "vue-router": "4.2.5"
+    "vue-router": "4.2.5",
+    "fabric": "^5.2.4"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.55.1",
+    "@types/fabric": "^4.5.12",
     "@vitejs/plugin-vue": "4.5.0",
     "@vue/compiler-sfc": "3.3.9",
     "autoprefixer": "^10.4.19",

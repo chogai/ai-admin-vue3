@@ -56,75 +56,6 @@
           </section>
         </div>
       </section>
-      <!-- 参考图 -->
-      <a-upload
-        class="avatar-uploader"
-        :action="''"
-        :auto-upload="false"
-        :show-file-list="false"
-        @before-upload="beforeUpload"
-        draggable
-      >
-        <template #upload-button>
-          <div>
-            <div
-              class="arco-upload-list-picture mt-2 rounded-10 !w-full custom-upload-avatar"
-              v-if="imgUrl"
-            >
-              <div
-                class="edui-left-panel__reference-img-container mt-0 rounded-10"
-              >
-                <span class="left-panel-setting-block__title">参考图</span>
-                <div class="upload-file">
-                  <div
-                    class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                    style="width: 56px; height: 56px"
-                  >
-                    <img class="w-auto rounded-10" :src="imgUrl" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="arco-upload-list-picture-mask rounded-10">
-                <IconPlus />
-              </div>
-            </div>
-            <div
-              v-else
-              class="edui-left-panel__reference-img-container rounded-10"
-            >
-              <span class="left-panel-setting-block__title">参考图</span>
-              <div class="upload-file">
-                <div
-                  class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
-                  style="width: 56px; height: 56px"
-                >
-                  <svg
-                    role="img"
-                    aria-label="cloud-upload"
-                    focusable="false"
-                    data-icon="cloud-upload"
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="gd_design_icon gd_design_icon-cloud-upload"
-                  >
-                    <path
-                      d="M12 3.25C9.23322 3.25 6.85685 4.91427 5.81432 7.29442C3.23861 7.63053 1.25 9.83289 1.25 12.5C1.25 15.3995 3.60051 17.75 6.5 17.75H8V16.25H6.5C4.42893 16.25 2.75 14.5711 2.75 12.5C2.75 10.4736 4.35756 8.82234 6.36655 8.75232L6.87754 8.73451L7.04768 8.25236C7.76807 6.211 9.71438 4.75 12 4.75C14.2856 4.75 16.2319 6.211 16.9523 8.25236L17.1225 8.73451L17.6334 8.75232C19.6424 8.82234 21.25 10.4736 21.25 12.5C21.25 14.5711 19.5711 16.25 17.5 16.25H16V17.75H17.5C20.3995 17.75 22.75 15.3995 22.75 12.5C22.75 9.83289 20.7614 7.63052 18.1857 7.29442C17.1431 4.91427 14.7668 3.25 12 3.25Z"
-                      fill="currentColor"
-                    ></path>
-                    <path
-                      d="M12.75 13.1013V20.5H11.25V13.1013L9.48014 14.5762L8.51986 13.4238L12 10.5237L15.4801 13.4238L14.5199 14.5762L12.75 13.1013Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </a-upload>
       <!-- 宽度 -->
       <div class="left-panel-setting-block__header">
         <div class="left-panel-setting-block__title mt-2 fs-5">宽度</div>
@@ -159,8 +90,97 @@
       <div class="left-panel-setting-block__header">
         <div class="left-panel-setting-block__title mt-2 fs-5">重绘幅度</div>
       </div>
-
       <a-input-number v-model="form.denoising_strength" :max="1" />
+      <!-- 图生图 -->
+      <div class="left-panel-setting-block__header">
+        <div class="left-panel-setting-block__title mt-2 fs-5">图生图类型</div>
+      </div>
+      <a-radio-group
+        v-model="imgType"
+        :options="imgOptions"
+        @change="handleChangeImgType"
+      />
+      <div>
+        <template v-if="imgType === 1">
+          <!-- 参考图 -->
+          <a-upload
+            class="avatar-uploader"
+            :action="''"
+            :auto-upload="false"
+            :show-file-list="false"
+            @before-upload="beforeUpload"
+            draggable
+          >
+            <template #upload-button>
+              <div>
+                <div
+                  class="arco-upload-list-picture mt-2 rounded-10 !w-full custom-upload-avatar"
+                  v-if="imgUrl"
+                >
+                  <div
+                    class="edui-left-panel__reference-img-container mt-0 rounded-10"
+                  >
+                    <span class="left-panel-setting-block__title">参考图</span>
+                    <div class="upload-file">
+                      <div
+                        class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
+                        style="width: 56px; height: 56px"
+                      >
+                        <img class="w-auto rounded-10" :src="imgUrl" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="arco-upload-list-picture-mask rounded-10">
+                    <IconPlus />
+                  </div>
+                </div>
+                <div
+                  v-else
+                  class="edui-left-panel__reference-img-container rounded-10"
+                >
+                  <span class="left-panel-setting-block__title">参考图</span>
+                  <div class="upload-file">
+                    <div
+                      class="upload-file__upload upload-file__upload--white gda-dropdown-trigger"
+                      style="width: 56px; height: 56px"
+                    >
+                      <svg
+                        role="img"
+                        aria-label="cloud-upload"
+                        focusable="false"
+                        data-icon="cloud-upload"
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="gd_design_icon gd_design_icon-cloud-upload"
+                      >
+                        <path
+                          d="M12 3.25C9.23322 3.25 6.85685 4.91427 5.81432 7.29442C3.23861 7.63053 1.25 9.83289 1.25 12.5C1.25 15.3995 3.60051 17.75 6.5 17.75H8V16.25H6.5C4.42893 16.25 2.75 14.5711 2.75 12.5C2.75 10.4736 4.35756 8.82234 6.36655 8.75232L6.87754 8.73451L7.04768 8.25236C7.76807 6.211 9.71438 4.75 12 4.75C14.2856 4.75 16.2319 6.211 16.9523 8.25236L17.1225 8.73451L17.6334 8.75232C19.6424 8.82234 21.25 10.4736 21.25 12.5C21.25 14.5711 19.5711 16.25 17.5 16.25H16V17.75H17.5C20.3995 17.75 22.75 15.3995 22.75 12.5C22.75 9.83289 20.7614 7.63052 18.1857 7.29442C17.1431 4.91427 14.7668 3.25 12 3.25Z"
+                          fill="currentColor"
+                        ></path>
+                        <path
+                          d="M12.75 13.1013V20.5H11.25V13.1013L9.48014 14.5762L8.51986 13.4238L12 10.5237L15.4801 13.4238L14.5199 14.5762L12.75 13.1013Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </a-upload>
+        </template>
+        <template v-else>
+          <a-button @click="handleDraw">打开区域重绘</a-button>
+        </template>
+      </div>
+      <!-- 遮罩模糊 -->
+      <div class="left-panel-setting-block__header">
+        <div class="left-panel-setting-block__title mt-2 fs-5">遮罩模糊</div>
+      </div>
+      <a-input-number v-model="form.mask_blur" :max="64" />
       <!-- 模型权重 -->
       <div class="left-panel-setting-block__header">
         <div class="left-panel-setting-block__title mt-2 fs-5">模型权重</div>
@@ -176,7 +196,7 @@
         />
       </a-select>
       <!-- LORA -->
-      <div class="left-panel-setting-block__header">
+      <!-- <div class="left-panel-setting-block__header">
         <div class="left-panel-setting-block__title mt-2 fs-5">LORA</div>
       </div>
       <a-select v-model="form.lora" placeholder="请选择LORA">
@@ -185,8 +205,16 @@
           :value="item.value"
           :label="item.label"
         />
-      </a-select>
+      </a-select> -->
     </section>
+    <a-modal
+      v-model:visible="customCanvasDialog"
+      :width="600"
+      title="区域重绘"
+      @ok="handleDialogOk"
+    >
+      <CustomCanvas></CustomCanvas>
+    </a-modal>
   </div>
 </template>
 
@@ -194,8 +222,14 @@
 import { reactive, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { IconPlus } from "@arco-design/web-vue/es/icon";
+import CustomCanvas from "./CustomCanvas.vue";
+import { useCanvasStore } from "@/store/modules/canvas";
+
+const canvasStore = useCanvasStore();
 
 const emits = defineEmits(["updateForm"]);
+
+const customCanvasDialog = ref(false);
 
 const form = reactive({
   lora: null,
@@ -204,10 +238,23 @@ const form = reactive({
   },
 });
 
+const imgType = ref(1);
+
 const LoraOptions = reactive([
   {
     label: "test",
     value: "1111",
+  },
+]);
+
+const imgOptions = reactive([
+  {
+    label: "图生图",
+    value: 1,
+  },
+  {
+    label: "区域重绘",
+    value: 2,
   },
 ]);
 const imgUrl = ref("");
@@ -285,6 +332,13 @@ watch(
   }
 );
 
+const handleDialogOk = () => {
+  canvasStore.saveImages();
+  form.mask =
+    "data:image/webp;base64," + canvasStore.generatorImageProps.maskImage;
+  form.init_images = [canvasStore.generatorImageProps.sourceImage];
+};
+
 const beforeUpload = (file: any) => {
   const isJPG = file.type === "image/jpeg";
   const isPNG = file.type === "image/png";
@@ -308,6 +362,15 @@ const beforeUpload = (file: any) => {
     console.log(err);
   };
   return true;
+};
+
+const handleDraw = () => {
+  customCanvasDialog.value = true;
+};
+
+const handleChangeImgType = () => {
+  form.init_images = [];
+  form.mask = "";
 };
 </script>
 
